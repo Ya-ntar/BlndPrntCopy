@@ -1,0 +1,160 @@
+HorizontalLayout.MobPictures {
+    Position = (1.25%, 190);
+    Ratios = [1];
+    Size = (770, 210);
+
+    Renderer {
+    }
+
+    Group.Template {
+        Size = (770, 210);
+
+        Renderer {
+        }
+
+        RichTextLabel.Pointer {
+            HorizontalAlignment = Center;
+            Position = (0, 4.76%);
+            ScrollbarPolicy = Never;
+            Size = (100%, 10%);
+            Text = "∆";
+            TextSize = 20;
+            VerticalAlignment = Center;
+            Visible = false;
+
+            Renderer {
+                BackgroundColor = transparent;
+                BorderColor = #3C3C3C;
+                Borders = (0, 0, 0, 0);
+                TextColor = white;
+                TextureBackground = None;
+
+                Scrollbar {
+                    ArrowBackgroundColor = #F5F5F5;
+                    ArrowBackgroundColorHover = white;
+                    ArrowColor = #3C3C3C;
+                    ArrowColorHover = black;
+                    TextureArrowDown = None;
+                    TextureArrowDownHover = None;
+                    TextureArrowUp = None;
+                    TextureArrowUpHover = None;
+                    TextureThumb = None;
+                    TextureThumbHover = None;
+                    TextureTrack = None;
+                    TextureTrackHover = None;
+                    ThumbColor = #DCDCDC;
+                    ThumbColorHover = #E6E6E6;
+                    TrackColor = #F5F5F5;
+                }
+            }
+        }
+
+        RichTextLabel.Name {
+            HorizontalAlignment = Center;
+            Position = (0, 15%);
+            ScrollbarPolicy = Automatic;
+            Size = (100%, 15.24%);
+            Text = Frog;
+            TextSize = 13;
+            VerticalAlignment = Center;
+
+            Renderer {
+                BackgroundColor = transparent;
+                BorderColor = #3C3C3C;
+                Borders = (0, 0, 0, 0);
+                TextColor = white;
+                TextureBackground = None;
+
+                Scrollbar {
+                    ArrowBackgroundColor = #F5F5F5;
+                    ArrowBackgroundColorHover = white;
+                    ArrowColor = #3C3C3C;
+                    ArrowColorHover = black;
+                    TextureArrowDown = None;
+                    TextureArrowDownHover = None;
+                    TextureArrowUp = None;
+                    TextureArrowUpHover = None;
+                    TextureThumb = None;
+                    TextureThumbHover = None;
+                    TextureTrack = None;
+                    TextureTrackHover = None;
+                    ThumbColor = #DCDCDC;
+                    ThumbColorHover = #E6E6E6;
+                    TrackColor = #F5F5F5;
+                }
+            }
+        }
+
+        RichTextLabel.Picture {
+            HorizontalAlignment = Center;
+            Position = (0, 30%);
+            ScrollbarPolicy = Never;
+            Size = (100%, 54.76%);
+            Text = "   _   _\n   (.)_(.)\n   _ (   _   ) _\n  / \\/`-----'\\/ \\\n__\\ ( (     ) ) /__\n  /\\ \\._./ /\\  \n  _/ /|\\   /|\\ \\_\n";
+            TextSize = 13;
+            VerticalAlignment = Center;
+
+            Renderer {
+                BackgroundColor = transparent;
+                BorderColor = #3C3C3C;
+                Borders = (0, 0, 0, 0);
+                TextColor = white;
+                TextureBackground = None;
+
+                Scrollbar {
+                    ArrowBackgroundColor = #F5F5F5;
+                    ArrowBackgroundColorHover = white;
+                    ArrowColor = #3C3C3C;
+                    ArrowColorHover = black;
+                    TextureArrowDown = None;
+                    TextureArrowDownHover = None;
+                    TextureArrowUp = None;
+                    TextureArrowUpHover = None;
+                    TextureThumb = None;
+                    TextureThumbHover = None;
+                    TextureTrack = None;
+                    TextureTrackHover = None;
+                    ThumbColor = #DCDCDC;
+                    ThumbColorHover = #E6E6E6;
+                    TrackColor = #F5F5F5;
+                }
+            }
+        }
+
+        RichTextLabel.Info {
+            HorizontalAlignment = Center;
+            Position = (0%, 80.95%);
+            ScrollbarPolicy = Automatic;
+            Size = (100%, 19.05%);
+            Text = "HP: 4/6, DMG: 3";
+            TextSize = 13;
+            VerticalAlignment = Center;
+
+            Renderer {
+                BackgroundColor = transparent;
+                BorderColor = #3C3C3C;
+                Borders = (0, 0, 0, 0);
+                TextColor = white;
+                TextureBackground = None;
+
+                Scrollbar {
+                    ArrowBackgroundColor = #F5F5F5;
+                    ArrowBackgroundColorHover = white;
+                    ArrowColor = #3C3C3C;
+                    ArrowColorHover = black;
+                    TextureArrowDown = None;
+                    TextureArrowDownHover = None;
+                    TextureArrowUp = None;
+                    TextureArrowUpHover = None;
+                    TextureThumb = None;
+                    TextureThumbHover = None;
+                    TextureTrack = None;
+                    TextureTrackHover = None;
+                    ThumbColor = #DCDCDC;
+                    ThumbColorHover = #E6E6E6;
+                    TrackColor = #F5F5F5;
+                }
+            }
+        }
+    }
+}

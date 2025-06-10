@@ -1,0 +1,68 @@
+Group.grp {
+    Position = (1%, 0%);
+    Size = (30%, 50%);
+
+    Renderer {
+    }
+
+    Button.act {
+        Size = (45%, 100%);
+        Text = Attack;
+        TextSize = 20;
+
+        Renderer {
+            BackgroundColor = black;
+            BackgroundColorDisabled = #E6E6E6;
+            BackgroundColorDown = #EBEBEB;
+            BackgroundColorHover = white;
+            BorderColor = white;
+            BorderColorDisabled = #7D7D7D;
+            BorderColorDown = black;
+            BorderColorFocused = #1E1EB4;
+            BorderColorHover = black;
+            Borders = (2, 2, 2, 2);
+            TextColor = white;
+            TextColorDisabled = #7D7D7D;
+            TextColorDown = black;
+            TextColorHover = black;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+    }
+
+    Button.inventory {
+        Position = (55%, 0%);
+        Size = (45%, 100%);
+        Text = Inventory;
+        TextSize = 20;
+
+        Renderer {
+            BackgroundColor = black;
+            BackgroundColorDisabled = #E6E6E6;
+            BackgroundColorDown = #EBEBEB;
+            BackgroundColorHover = white;
+            BorderColor = white;
+            BorderColorDisabled = #7D7D7D;
+            BorderColorDown = black;
+            BorderColorFocused = #1E1EB4;
+            BorderColorHover = black;
+            Borders = (2, 2, 2, 2);
+            TextColor = white;
+            TextColorDisabled = #7D7D7D;
+            TextColorDown = black;
+            TextColorHover = black;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+    }
+}

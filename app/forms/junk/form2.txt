@@ -1,0 +1,98 @@
+Renderer.1 {
+    BorderColor = Black;
+    TextureThumb = "../themes/Black.png" Part(253, 171, 30, 30) Smooth;
+    TextureThumbHover = None;
+    TextureTrack = "../themes/Black.png" Part(172, 209, 20, 45) Middle(0, 15) Smooth;
+    TextureTrackHover = "../themes/Black.png" Part(194, 209, 20, 45) Middle(0, 15) Smooth;
+    ThumbColor = rgb(190, 190, 190);
+    TrackColor = rgb(80, 80, 80);
+}
+
+Slider.Slider1 {
+    ChangeValueOnScroll = true;
+    InvertedDirection = false;
+    Maximum = 10;
+    Minimum = 0;
+    Position = (70, 228);
+    Renderer = &1;
+    Size = (18, 280);
+    Step = 1;
+    Value = 0;
+}
+
+Scrollbar.Scrollbar1 {
+    Maximum = 10;
+    Position = (130, 230);
+    ScrollAmount = 1;
+    ScrollbarPolicy = Automatic;
+    Size = (28, 280);
+    Value = 0;
+    ViewportSize = 1;
+
+    Renderer {
+        ArrowBackgroundColor = rgb(80, 80, 80);
+        ArrowColor = rgb(190, 190, 190);
+        TextureArrowDown = "../themes/Black.png" Part(1, 230, 20, 20) Middle(0, 1, 20, 19) Smooth;
+        TextureArrowDownHover = "../themes/Black.png" Part(306, 225, 20, 20) Middle(0, 1, 20, 19) Smooth;
+        TextureArrowUp = "../themes/Black.png" Part(284, 225, 20, 20) Middle(0, 0, 20, 19) Smooth;
+        TextureArrowUpHover = "../themes/Black.png" Part(285, 171, 20, 20) Middle(0, 0, 20, 19) Smooth;
+        TextureThumb = "../themes/Black.png" Part(23, 230, 20, 20) Smooth;
+        TextureThumbHover = "../themes/Black.png" Part(306, 193, 20, 20) Smooth;
+        TextureTrack = "../themes/Black.png" Part(255, 1, 20, 20) Smooth;
+        TextureTrackHover = "../themes/Black.png" Part(284, 203, 20, 20) Smooth;
+        ThumbColor = rgb(190, 190, 190);
+        TrackColor = rgb(80, 80, 80);
+    }
+}
+
+EditBoxSlider.EditBoxSlider1 {
+    DecimalPlaces = 0;
+    Position = (180, 440);
+    Size = (330, 61.6);
+
+    Renderer {
+    }
+
+    Group {
+        Size = (330, 61.6);
+
+        Renderer {
+        }
+
+        EditBox.EditBox {
+            InputValidator = Float;
+            Size = (330, 46.2);
+            Text = 0;
+            TextSize = 13;
+
+            Renderer {
+                BackgroundColor = rgb(80, 80, 80);
+                BackgroundColorHover = rgb(100, 100, 100);
+                BorderColor = Black;
+                CaretColor = rgb(110, 110, 255);
+                DefaultTextColor = rgb(120, 120, 120);
+                Padding = (6, 4, 6, 4);
+                SelectedTextBackgroundColor = rgb(10, 110, 255);
+                SelectedTextColor = White;
+                TextColor = rgb(190, 190, 190);
+                TextColorDisabled = rgb(125, 125, 125);
+                Texture = "../themes/Black.png" Part(1, 154, 60, 40) Middle(15, 0) Smooth;
+                TextureDisabled = None;
+                TextureFocused = "../themes/Black.png" Part(1, 112, 60, 40) Middle(15, 0) Smooth;
+                TextureHover = "../themes/Black.png" Part(63, 196, 60, 40) Middle(15, 0) Smooth;
+            }
+        }
+
+        Slider.Slider {
+            ChangeValueOnScroll = true;
+            InvertedDirection = false;
+            Maximum = 10;
+            Minimum = 0;
+            Position = (EditBox.left, EditBox.top + EditBox.height);
+            Renderer = &1;
+            Size = (330, 15.4);
+            Step = 1;
+            Value = 0;
+        }
+    }
+}

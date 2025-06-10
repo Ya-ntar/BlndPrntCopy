@@ -1,0 +1,16 @@
+{
+  "name": "Frog",
+  "image_path": "assets/gameResources/mobs/frog.txt",
+  "hp": 35,
+  "main_attack_pattern": ".../.../..",
+  "beating_pattern": "........../",
+  "attack_duration": 20.0,
+  "attack_power": 2,
+  "item_reactions": [
+    {
+      "event": "eraser",
+      "action": "lose_hp",
+      "value": -5
+    }
+  ]
+}

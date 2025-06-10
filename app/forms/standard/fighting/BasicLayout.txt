@@ -1,0 +1,19 @@
+Renderer.1 {
+}
+
+Group.up {
+    Renderer = &1;
+    Size = (100%, 10%);
+}
+
+Group.middle {
+    Position = (0%, 10%);
+    Renderer = &1;
+    Size = (100%, 60%);
+}
+
+Group.down {
+    Position = (0%, 70%);
+    Renderer = &1;
+    Size = (100%, 30%);
+}

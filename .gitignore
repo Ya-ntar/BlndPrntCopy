@@ -1,32 +1,9 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+/app/cmake-build-debug/
+/app/.idea
+/.idea
+/app/cmake-build-release
+*.rar
+*.zip
+experimental_exes.rar
+/experimental_exes
+experimental_exes/blind_print.exe

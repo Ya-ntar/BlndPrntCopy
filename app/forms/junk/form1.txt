@@ -1,0 +1,68 @@
+Renderer.1 {
+    BackgroundColor = rgb(80, 80, 80);
+    BackgroundColorHover = rgb(100, 100, 100);
+    BorderColor = Black;
+    TextColor = rgb(190, 190, 190);
+    TextColorDisabled = rgb(125, 125, 125);
+    TextColorHover = rgb(250, 250, 250);
+    Texture = "../themes/Black.png" Part(140, 53, 45, 50) Middle(10, 0) Smooth;
+    TextureDisabled = None;
+    TextureDown = "../themes/Black.png" Part(125, 105, 45, 50) Middle(10, 0) Smooth;
+    TextureDownFocused = None;
+    TextureDownHover = None;
+    TextureFocused = "../themes/Black.png" Part(93, 53, 45, 50) Middle(10, 0) Smooth;
+    TextureHover = "../themes/Black.png" Part(140, 1, 45, 50) Middle(10, 0) Smooth;
+}
+
+Panel.Panel1 {
+    Position = (-10, 440);
+    Size = (810, 160);
+
+    Renderer {
+        BackgroundColor = rgb(80, 80, 80);
+        BorderColor = Black;
+        TextureBackground = None;
+    }
+}
+
+Picture.Picture1 {
+    Position = (240, 30);
+    Size = (50, 50);
+
+    Renderer {
+        Texture = "evil_guy.png" Smooth;
+        TransparentTexture = false;
+    }
+}
+
+Button.Attack {
+    Position = (20, 470);
+    Renderer = &1;
+    Size = (120, 42);
+    Text = Attack;
+    TextSize = 13;
+}
+
+Button.Inventory {
+    Position = (160, 470);
+    Renderer = &1;
+    Size = (120, 42);
+    Text = Inventory;
+    TextSize = 13;
+}
+
+Button.Words {
+    Position = (300, 470);
+    Renderer = &1;
+    Size = (120, 42);
+    Text = Words;
+    TextSize = 13;
+}
+
+Button.Run {
+    Position = (660, 540);
+    Renderer = &1;
+    Size = (120, 42);
+    Text = Run;
+    TextSize = 13;
+}

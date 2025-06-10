@@ -1,0 +1,16 @@
+{
+  "name": "cat",
+  "image_path": "assets/gameResources/mobs/cat.txt",
+  "hp": 35,
+  "main_attack_pattern": ".?",
+  "beating_pattern": "...?",
+  "attack_duration": 15.0,
+  "attack_power": 3,
+  "item_reactions": [
+    {
+      "event": "ink",
+      "action": "heal",
+      "value": 10
+    }
+  ]
+}

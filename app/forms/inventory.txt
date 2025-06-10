@@ -1,0 +1,40 @@
+ScrollablePanel.InvPanel {
+    ContentSize = (0, 0);
+    HorizontalScrollbarPolicy = Never;
+    Position = (2%, 0%);
+    Size = (80%, 70%);
+    VerticalScrollbarPolicy = Automatic;
+
+    Renderer {
+        BackgroundColor = black;
+        BorderColor = rgba(240, 240, 240, 215);
+        Borders = (0, 0, 0, 0);
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = rgba(160, 160, 160, 215);
+            ArrowBackgroundColorHover = rgba(170, 170, 170, 215);
+            ArrowColor = rgba(200, 200, 200, 215);
+            ArrowColorHover = rgba(225, 225, 225, 215);
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = rgba(185, 185, 185, 215);
+            ThumbColorHover = rgba(195, 195, 195, 215);
+            TrackColor = rgba(160, 160, 160, 215);
+            TrackColorHover = rgba(170, 170, 170, 215);
+        }
+    }
+
+    GrowVerticalLayout.vLayout {
+        Size = (100%, 0);
+
+        Renderer {
+        }
+    }
+}

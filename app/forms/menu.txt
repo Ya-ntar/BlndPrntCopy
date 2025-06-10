@@ -1,0 +1,218 @@
+Renderer.1 {
+    BackgroundColor = black;
+    BackgroundColorDisabled = #E6E6E6;
+    BackgroundColorDown = #EBEBEB;
+    BackgroundColorHover = #6D487C;
+    BorderColor = #3C3C3C;
+    BorderColorDisabled = #7D7D7D;
+    BorderColorDown = black;
+    BorderColorFocused = #1E1EB4;
+    BorderColorHover = black;
+    Borders = (1, 1, 1, 1);
+    TextColor = #88AFFF;
+    TextColorDisabled = #7D7D7D;
+    TextColorDown = black;
+    TextColorHover = black;
+    Texture = None;
+    TextureDisabled = None;
+    TextureDown = None;
+    TextureDownFocused = None;
+    TextureDownHover = None;
+    TextureFocused = None;
+    TextureHover = None;
+}
+
+Panel.Panel1 {
+    Position = (28.75%, 0 - 2.5%);
+    Size = (33.75%, 100%);
+
+    Renderer {
+        BackgroundColor = black;
+        BorderColor = black;
+        TextureBackground = None;
+    }
+
+    RichTextLabel.ascii {
+        HorizontalAlignment = Center;
+        Position = (10%, 8.75%);
+        ScrollbarPolicy = Automatic;
+        Size = (80%, 58%);
+        Text = "\n\nB\nL|\n||I\nN.+\n__:D__\n:  :&  +\n+  .& .$\n+  .$  +\nX  .&  X\n:x  .X  X.\nX   :+  .X\n.:   :;   +.\n;.   :;   .+\n.:    ::    ;.\n.x     :;     +\nx      ;+     .x\nX.      xx      :+\n;;     .xxxx;.     +:\n;;       +$&:       x;\n+;    .    xx    .    ;;\nx:    .            .    ;x\n.x    .                .   .X.\n.X...                        ;.:X\nX:                          ;x\n+.                        ;+\nX.                      :x\nX        .    +       .+\n;     .              :\n.X    .        .    x.\n;.   .        .   .+\nx  ..        .   x\n+    ..:.....   .;\n;.              ;;\n+:              +:\n.+              $.\n.  ....::....:.;+::..... ....: .\nX :                        +:.   x\n.;                         ..:  +.\n+                         .    X\n..;                        .  .\n..       ... .  . ...      /.\n;;               ..   x:\n.x               ..   x.\n.x               .:   x\nx               .:.  X\nX               |:  .X\nx.  R      N    |   $\nX.P     I     T     |\n";
+        TextSize = 8;
+        VerticalAlignment = Center;
+
+        Renderer {
+            BackgroundColor = transparent;
+            BorderColor = #3C3C3C;
+            Borders = (0, 0, 0, 0);
+            TextColor = white;
+            TextureBackground = None;
+
+            Scrollbar {
+                ArrowBackgroundColor = #F5F5F5;
+                ArrowBackgroundColorHover = white;
+                ArrowColor = #3C3C3C;
+                ArrowColorHover = black;
+                TextureArrowDown = None;
+                TextureArrowDownHover = None;
+                TextureArrowUp = None;
+                TextureArrowUpHover = None;
+                TextureThumb = None;
+                TextureThumbHover = None;
+                TextureTrack = None;
+                TextureTrackHover = None;
+                ThumbColor = #DCDCDC;
+                ThumbColorHover = #E6E6E6;
+                TrackColor = #F5F5F5;
+            }
+        }
+    }
+
+    RichTextLabel.CenteredText {
+        Position = (10.28%, 6.25%);
+        ScrollbarPolicy = Never;
+        Size = (81.81%, 57.13%);
+        Text = "                                 B                    \n                                L|                                   \n                                ||I                                   \n                                N.+                                   \n                              __:D__                                   \n                             :  :&  +                                \n                             +  .& .$                                \n                             +  .$  +                                \n                             X  .&  X                                \n                            :x  .X  X.                               \n                            X   :+  .X                               \n                           .:   :;   +.                              \n                           ;.   :;   .+                              \n                          .:    ::    ;.                             \n                         .x     :;     +                             \n                         x      ;+     .x                            \n                        X.      xx      :+                           \n                       ;;     .xxxx;.     +:                          \n                      ;;       +$&:       x;                         \n                     +;    .    xx    .    ;;                        \n                    x:    .            .    ;x                       \n                  .x    .                .   .X.                     \n                .X...                        ;.:X                    \n                  X:                          ;x                     \n                   +.                        ;+                      \n                    X.                      :x                       \n                     X        .    +       .+                        \n                      ;     .              :                         \n                      .X    .        .    x.                         \n                       ;.   .        .   .+                          \n                        x  ..        .   x                           \n                        +    ..:.....   .;                           \n                        ;.              ;;                           \n                        +:              +:                           \n                        .+              $.                           \n                .  ....::....:.;+::..... ....: .                   \n                X :                        +:.   x                   \n                .;                         ..:  +.                   \n                 +                         .    X                    \n                 ..;                        .  .                     \n                  ..       ... .  . ...      /.                     \n                     ;;               ..   x:                        \n                     .x               ..   x.                        \n                     .x               .:   x                         \n                      x               .:.  X                         \n                      X               |:  .X                         \n                      x.  R      N    |   $                         \n                      X.P     I     T     |                         \n";
+        TextSize = 8;
+        VerticalAlignment = Center;
+        Visible = false;
+
+        Renderer {
+            BackgroundColor = transparent;
+            BorderColor = #3C3C3C;
+            Borders = (1, 1, 1, 1);
+            TextColor = white;
+            TextStyle = Regular;
+            TextureBackground = None;
+
+            Scrollbar {
+                ArrowBackgroundColor = #F5F5F5;
+                ArrowBackgroundColorHover = white;
+                ArrowColor = #3C3C3C;
+                ArrowColorHover = black;
+                TextureArrowDown = None;
+                TextureArrowDownHover = None;
+                TextureArrowUp = None;
+                TextureArrowUpHover = None;
+                TextureThumb = None;
+                TextureThumbHover = None;
+                TextureTrack = None;
+                TextureTrackHover = None;
+                ThumbColor = #DCDCDC;
+                ThumbColorHover = #E6E6E6;
+                TrackColor = #F5F5F5;
+            }
+        }
+    }
+
+    Button.Button4 {
+        IgnoreMouseEvents = true;
+        Position = (25%, 4.43%);
+        Size = (50%, 5.46%);
+        Text = "Blind Print";
+        TextSize = 13;
+
+        Renderer {
+            BackgroundColor = black;
+            BackgroundColorDisabled = #E6E6E6;
+            BackgroundColorDown = #EBEBEB;
+            BackgroundColorHover = #6D487C;
+            BorderColor = #3C3C3C;
+            BorderColorDisabled = #7D7D7D;
+            BorderColorDown = black;
+            BorderColorFocused = #1E1EB4;
+            BorderColorHover = black;
+            Borders = (0, 0, 0, 0);
+            TextColor = #88AFFF;
+            TextColorDisabled = #7D7D7D;
+            TextColorDown = black;
+            TextColorHover = black;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+    }
+
+    Button.Credits {
+        Position = (25.19%, 86.1%);
+        Renderer = &1;
+        Size = (50%, 8.33%);
+        Text = Credits;
+        TextSize = 13;
+    }
+
+    Button.Start {
+        Position = (25%, 66.53%);
+        Size = (50%, 8.33%);
+        Text = Start;
+        TextSize = 13;
+
+        Renderer {
+            BackgroundColor = black;
+            BackgroundColorDisabled = #E6E6E6;
+            BackgroundColorDown = #EBEBEB;
+            BackgroundColorHover = #6D487C;
+            BorderColor = #3C3C3C;
+            BorderColorDisabled = #7D7D7D;
+            BorderColorDown = black;
+            BorderColorFocused = #1E1EB4;
+            BorderColorHover = black;
+            Borders = (1, 1, 1, 1);
+            TextColor = #88AFFF;
+            TextColorDisabled = #7D7D7D;
+            TextColorDown = black;
+            TextColorHover = black;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+    }
+
+    Button.Settings {
+        Position = (25%, 76.75%);
+        Renderer = &1;
+        Size = (50%, 8.33%);
+        Text = Settings;
+        TextSize = 13;
+    }
+
+    Button.Button5 {
+        Position = (25%, 35%);
+        Size = (50%, 5.47%);
+        Text = "                                 B                    \n                                L|                                   \n                                ||I                                   \n                                N.+                                   \n                              __:D__                                   \n                             :  :&  +                                \n                             +  .& .$                                \n                             +  .$  +                                \n                             X  .&  X                                \n                            :x  .X  X.                               \n                            X   :+  .X                               \n                           .:   :;   +.                              \n                           ;.   :;   .+                              \n                          .:    ::    ;.                             \n                         .x     :;     +                             \n                         x      ;+     .x                            \n                        X.      xx      :+                           \n                       ;;     .xxxx;.     +:                          \n                      ;;       +$&:       x;                         \n                     +;    .    xx    .    ;;                        \n                    x:    .            .    ;x                       \n                  .x    .                .   .X.                     \n                .X...                        ;.:X                    \n                  X:                          ;x                     \n                   +.                        ;+                      \n                    X.                      :x                       \n                     X        .    +       .+                        \n                      ;     .              :                         \n                      .X    .        .    x.                         \n                       ;.   .        .   .+                          \n                        x  ..        .   x                           \n                        +    ..:.....   .;                           \n                        ;.              ;;                           \n                        +:              +:                           \n                        .+              $.                           \n                .  ....::....:.;+::..... ....: .                   \n                X :                        +:.   x                   \n                .;                         ..:  +.                   \n                 +                         .    X                    \n                 ..;                        .  .                     \n                  ..       ... .  . ...      /.                     \n                     ;;               ..   x:                        \n                     .x               ..   x.                        \n                     .x               .:   x                         \n                      x               .:.  X                         \n                      X               |:  .X                         \n                      x.  R      N    |   $                         \n                      X.P     I     T     |                         \n";
+        TextSize = 8;
+        Visible = false;
+
+        Renderer {
+            BackgroundColor = #0D0D0A;
+            BackgroundColorDisabled = #E6E6E6;
+            BackgroundColorDown = #EBEBEB;
+            BackgroundColorHover = white;
+            BorderColor = blue;
+            BorderColorDisabled = #7D7D7D;
+            BorderColorDown = black;
+            BorderColorFocused = #1E1EB4;
+            BorderColorHover = black;
+            Borders = (1, 1, 1, 1);
+            TextColor = #FDF9FF;
+            TextColorDisabled = #7D7D7D;
+            TextColorDown = black;
+            TextColorHover = black;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+    }
+}

@@ -1,0 +1,178 @@
+Button.New_Game {
+    Position = (3.75%, 15%);
+    Size = (21.25%, 7.44%);
+    Text = "Start new game";
+    TextSize = 13;
+
+    Renderer {
+        BackgroundColor = black;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #EBEBEB;
+        BackgroundColorHover = white;
+        BorderColor = white;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        TextColor = white;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button.Back {
+    Position = (82.5%, 91.25%);
+    Size = (15%, 5.25%);
+    Text = Back;
+    TextSize = 13;
+
+    Renderer {
+        BackgroundColor = black;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #EBEBEB;
+        BackgroundColorHover = white;
+        BorderColor = white;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        TextColor = white;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button."Load Game" {
+    Position = (3.75%, 52.5%);
+    Size = (21.25%, 7.5%);
+    Text = "Load Game";
+    TextSize = 13;
+
+    Renderer {
+        BackgroundColor = black;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #EBEBEB;
+        BackgroundColorHover = white;
+        BorderColor = white;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        TextColor = white;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+TextArea.SaveFileDestination {
+    DefaultText = "Save file destination";
+    HorizontalScrollbarPolicy = Never;
+    MaximumCharacters = 0;
+    Position = (3.75%, 65%);
+    Size = (70%, 2.5%);
+    Text = "";
+    TextSize = 14;
+    VerticalScrollbarPolicy = Automatic;
+
+    Renderer {
+        BackgroundColor = #3C3C3C;
+        BorderColor = black;
+        Borders = (1, 1, 1, 1);
+        CaretColor = white;
+        CaretWidth = 1;
+        DefaultTextColor = #A0A0A0;
+        Padding = (0, 0, 0, 0);
+        SelectedTextBackgroundColor = #006EFF;
+        SelectedTextColor = white;
+        TextColor = #88AFFF;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = #F5F5F5;
+            ArrowBackgroundColorHover = white;
+            ArrowColor = #3C3C3C;
+            ArrowColorHover = black;
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = #DCDCDC;
+            ThumbColorHover = #E6E6E6;
+            TrackColor = #F5F5F5;
+        }
+    }
+}
+
+TextArea.NewGameName {
+    DefaultText = "New Game Name";
+    HorizontalScrollbarPolicy = Never;
+    MaximumCharacters = 0;
+    Position = (3.75%, 28.75%);
+    Size = (70%, 2.5%);
+    Text = "";
+    TextSize = 14;
+    VerticalScrollbarPolicy = Automatic;
+
+    Renderer {
+        BackgroundColor = #3C3C3C;
+        BorderColor = black;
+        Borders = (1, 1, 1, 1);
+        CaretColor = white;
+        CaretWidth = 1;
+        DefaultTextColor = #A0A0A0;
+        Padding = (0, 0, 0, 0);
+        SelectedTextBackgroundColor = #006EFF;
+        SelectedTextColor = white;
+        TextColor = #88AFFF;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = #F5F5F5;
+            ArrowBackgroundColorHover = white;
+            ArrowColor = #3C3C3C;
+            ArrowColorHover = black;
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = #DCDCDC;
+            ThumbColorHover = #E6E6E6;
+            TrackColor = #F5F5F5;
+        }
+    }
+}

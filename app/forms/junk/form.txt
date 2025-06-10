@@ -1,0 +1,123 @@
+Button.1 {
+    Position = (160, 50);
+    Size = (170, 59.5);
+    Text = Button;
+    TextSize = 13;
+
+    Renderer {
+        BackgroundColor = #FFC252;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #EBEBEB;
+        BackgroundColorHover = white;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        TextColor = #3C3C3C;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button.2 {
+    Position = (160, 130);
+    Size = (170, 59.5);
+    Text = Button;
+    TextSize = 13;
+
+    Renderer {
+        BackgroundColor = #FF3479;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #EBEBEB;
+        BackgroundColorHover = #FF4EC1;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        TextColor = #3C3C3C;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button.3 {
+    Position = (160, 210);
+    Size = (170, 59.5);
+    Text = Button;
+    TextSize = 13;
+
+    Renderer {
+        BackgroundColor = #7DCBFF;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #EBEBEB;
+        BackgroundColorHover = white;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        TextColor = #3C3C3C;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button.4 {
+    Position = (160, 300);
+    Size = (170, 59.5);
+    Text = Button;
+    TextSize = 13;
+
+    Renderer {
+        BackgroundColor = #35FF6D;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #EBEBEB;
+        BackgroundColorHover = white;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        TextColor = #3C3C3C;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}

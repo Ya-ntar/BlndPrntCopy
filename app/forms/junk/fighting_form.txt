@@ -1,0 +1,317 @@
+Renderer.1 {
+}
+
+ListView.ListView1 {
+    ExpandLastColumn = 0;
+    HeaderHeight = 0;
+    HeaderSeparatorHeight = 0;
+    HeaderVisible = true;
+    HorizontalScrollbarPolicy = Automatic;
+    ItemHeight = 19;
+    Position = (3.75%, 1.25%);
+    ResizableColumns = false;
+    SeparatorWidth = 1;
+    ShowVerticalGridLines = 1;
+    Size = (93.5%, 5%);
+    TextSize = 13;
+    VerticalScrollbarPolicy = Automatic;
+
+    Renderer {
+        BackgroundColor = #F5F5F5;
+        BackgroundColorHover = white;
+        BorderColor = black;
+        Borders = (1, 1, 1, 1);
+        HeaderBackgroundColor = #E6E6E6;
+        HeaderTextColor = black;
+        Padding = (0, 0, 0, 0);
+        SelectedBackgroundColor = #006EFF;
+        SelectedBackgroundColorHover = #1E96FF;
+        SelectedTextColor = white;
+        SeparatorColor = #C8C8C8;
+        TextColor = #3C3C3C;
+        TextColorHover = black;
+        TextureBackground = None;
+        TextureHeaderBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = #F5F5F5;
+            ArrowBackgroundColorHover = white;
+            ArrowColor = #3C3C3C;
+            ArrowColorHover = black;
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = #DCDCDC;
+            ThumbColorHover = #E6E6E6;
+            TrackColor = #F5F5F5;
+        }
+    }
+
+    Column {
+        Alignment = Center;
+        AutoResize = true;
+        Expanded = true;
+        Text = "";
+        Width = 10;
+    }
+
+    Column {
+        Alignment = Center;
+        AutoResize = true;
+        Expanded = true;
+        Text = "";
+        Width = 10;
+    }
+
+    Column {
+        Alignment = Center;
+        AutoResize = true;
+        Expanded = true;
+        Text = "";
+        Width = 10;
+    }
+
+    Column {
+        Alignment = Center;
+        AutoResize = true;
+        Expanded = true;
+        Text = "";
+        Width = 10;
+    }
+
+    Column {
+        Alignment = Center;
+        AutoResize = true;
+        Expanded = true;
+        Text = "";
+        Width = 10;
+    }
+}
+
+HorizontalWrap.HorizontalWrap1 {
+    Position = (80, 195);
+    Size = (328, 367.062);
+
+    Renderer {
+    }
+}
+
+HorizontalLayout.HorizontalLayout1 {
+    Position = (4.17%, 14.82%);
+    Ratios = [1, 1];
+    Size = (93.23%, 406.32);
+
+    Renderer {
+    }
+
+    GrowVerticalLayout.GrowVerticalLayout1 {
+        Renderer = &1;
+        Size = (372.92, 390.012);
+
+        TextArea.TextArea2 {
+            HorizontalScrollbarPolicy = Never;
+            MaximumCharacters = 0;
+            Position = (0, 30);
+            Size = (372.92, 390.012);
+            Text = "                   ..------------------..                   \n             ...----------------------------...             \n            .----------%--------------%@@------.            \n          :-----------%@%-------------%@@@-------:.         \n        :------------%@@@#-----------%%@%%---------:        \n      .--------------%%%%+-----------%%@%%-----------.      \n    .:--------------%%@%%%-----------%%%%%-------------.    \n    ----------------@@%%%%----------%%%%@%--------------.   \n  .-----------------%%%%%%+---------%%%%%%%--------------.  \n .:----------------*%%%%%%%--------+%%%%%%%--------------:. \n .-----------------%%%%%%%%--------=%%%%%%%---------------. \n ------------------%%%%%%%%--------%%%%%%%%%--------------- \n.---------------:-%%%%%%%%%=-------%%%%%%%%%---------------.\n.-----------------%%%%%%%%%%------%%%%%%%%%%---------------.\n------------------%%%%%%%%%%%-----%%%%%#%%%%%---------------\n-----------------%%%%%%%%%%%%+--%%%%%%%%%%%%%=--------------\n--------------:--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--------------\n---------------%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------------\n--------------=%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@:------------\n-------------%%%%%*=----+*%%%%%%%%%+=--**%%%%%@%------------\n-------------@%@@*---***--*%%%%%%+-------+*%%%%%------------\n------------%%@@#--*+@@**--*%%%%*--+*+*#+--*%%%%------------\n------------%@@@*--**+*+*--*%%%%*--**@%*#--*%%%%%-----------\n------------@@@@%*----*---+*%%%%%=---###---*%%%%------------\n-------------@@%%%*+-----+%%%%%%%%*-------+%%%@@------------\n--------------@%%%@%%*+#%%%%%%%%%%%%*++**@%%%%%-------------\n--------------@%%%%%%%%%%@@%%%%%%%@%%@%%%@%%%@--------------\n-------------@@%@@%%%%%%%%%%%%%%@%%@%%%%%%%%%---------------\n-----------%%%%@@@%%%%%%%%%%%%@@%%%@%%%%%%%%----------------\n---------:@%%%%@@@%%@%@@@%%%%@@%%%%%%@%@%%@-----------------\n--------@@@%%@@@@@%%@@%%%@%@@@%%%%%%%@@%%-------------------\n-----@%%%%@%%@@%%@%@@@%%@%%%%%%%%@%@@%@---------------------\n----@@@@%%@%@@@%@%@%@@@%%%%@%%@%%%%@@-----------------------\n-#@@@@@@@@%%@@%%@@@%%%@@%@@@%@%-----------------------------\n%@@@@@%@@@%%%@@@@%%@%%%%@@@@@+------------------------------\n@%@%%@%%%%%%@%@@%%%@%@%@@@@@@-------------------------------\n%%%%%%%%%%%@@@%@%%%%%%%@@@@@--------------------------------\n@%%%%%%%%@%%@%@@@%%@%%@@@@@@--------------------------------\n%%%%@%%%@%%%%@@%@@@%@@@@@@@---------------------------------\n%%%%%%%%%%%%@@@@@@%%@@@@@@@---------------------------------\n%%%%%@%%%%%%%%%%@%@@@@@@@@@---------------------------------\n@%%%%%%%%%%@%%%%@@@@%@@@@@%---------------------------------\n@%%@%@@@@@@@@@@@@@@@@@@@@@----------------------------------\n%%%@@@@@@@@@@@@@@@@@@@@@@@----------------------------------\n";
+            TextSize = 7;
+            VerticalScrollbarPolicy = Automatic;
+
+            Renderer {
+                BackgroundColor = black;
+                BorderColor = #FCF6FF;
+                Borders = (0, 0, 0, 0);
+                CaretColor = black;
+                CaretWidth = 1;
+                DefaultTextColor = #A0A0A0;
+                Padding = (0, 0, 0, 0);
+                SelectedTextBackgroundColor = #006EFF;
+                SelectedTextColor = white;
+                TextColor = #FCFFFC;
+                TextureBackground = None;
+
+                Scrollbar {
+                    ArrowBackgroundColor = #F5F5F5;
+                    ArrowBackgroundColorHover = white;
+                    ArrowColor = #3C3C3C;
+                    ArrowColorHover = black;
+                    TextureArrowDown = None;
+                    TextureArrowDownHover = None;
+                    TextureArrowUp = None;
+                    TextureArrowUpHover = None;
+                    TextureThumb = None;
+                    TextureThumbHover = None;
+                    TextureTrack = None;
+                    TextureTrackHover = None;
+                    ThumbColor = #DCDCDC;
+                    ThumbColorHover = #E6E6E6;
+                    TrackColor = #F5F5F5;
+                }
+            }
+        }
+    }
+
+    GrowVerticalLayout.GrowVerticalLayout2 {
+        Position = (372.92, 0);
+        Renderer = &1;
+        Size = (372.92, 390.012);
+
+        RichTextLabel.RichTextLabel1 {
+            ScrollbarPolicy = Automatic;
+            Size = (372.92, 390.012);
+            Text = "1010111110100011000011110100 11100111100101110010111010111100101111001111101001010 11101001101000110111111101011010, 111010011100101100001111011011001011101100110110011001011110010?";
+            TextSize = 30;
+            VerticalAlignment = Center;
+
+            Renderer {
+                BackgroundColor = transparent;
+                BorderColor = #FBFFFA;
+                Borders = (5, 5, 5, 5);
+                Padding = (10, 10, 10, 10);
+                TextColor = white;
+                TextureBackground = None;
+
+                Scrollbar {
+                    ArrowBackgroundColor = #F5F5F5;
+                    ArrowBackgroundColorHover = white;
+                    ArrowColor = #3C3C3C;
+                    ArrowColorHover = black;
+                    TextureArrowDown = None;
+                    TextureArrowDownHover = None;
+                    TextureArrowUp = None;
+                    TextureArrowUpHover = None;
+                    TextureThumb = None;
+                    TextureThumbHover = None;
+                    TextureTrack = None;
+                    TextureTrackHover = None;
+                    ThumbColor = #DCDCDC;
+                    ThumbColorHover = #E6E6E6;
+                    TrackColor = #F5F5F5;
+                }
+            }
+        }
+    }
+}
+
+ChildWindow.ChildWindow1 {
+    CloseBehavior = None;
+    Position = (3.75%, 530);
+    Size = (93.75%, 32.5%);
+    TitleAlignment = Center;
+    TitleButtons = Close;
+    TitleTextSize = 13;
+
+    Renderer {
+        BackgroundColor = #E6E6E6;
+        BorderBelowTitleBar = 1;
+        BorderColor = black;
+        Borders = (1, 1, 1, 1);
+        DistanceToSide = 3;
+        PaddingBetweenButtons = 1;
+        ShowTextOnTitleButtons = true;
+        TextureBackground = None;
+        TextureTitleBar = None;
+        TitleBarColor = white;
+        TitleColor = #3C3C3C;
+
+        CloseButton {
+            BackgroundColor = #F5F5F5;
+            BackgroundColorDisabled = #E6E6E6;
+            BackgroundColorDown = #EBEBEB;
+            BackgroundColorHover = white;
+            BorderColor = #3C3C3C;
+            BorderColorDisabled = #7D7D7D;
+            BorderColorDown = black;
+            BorderColorFocused = #1E1EB4;
+            BorderColorHover = black;
+            Borders = (1, 1, 1, 1);
+            TextColor = #3C3C3C;
+            TextColorDisabled = #7D7D7D;
+            TextColorDown = black;
+            TextColorHover = black;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+
+        MaximizeButton {
+            BackgroundColor = #F5F5F5;
+            BackgroundColorDown = #EBEBEB;
+            BackgroundColorHover = white;
+            BorderColor = #3C3C3C;
+            BorderColorDown = black;
+            BorderColorHover = black;
+            Borders = (1, 1, 1, 1);
+            TextColor = #3C3C3C;
+            TextColorDown = black;
+            TextColorHover = black;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+
+        MinimizeButton {
+            BackgroundColor = #F5F5F5;
+            BackgroundColorDown = #EBEBEB;
+            BackgroundColorHover = white;
+            BorderColor = #3C3C3C;
+            BorderColorDown = black;
+            BorderColorHover = black;
+            Borders = (1, 1, 1, 1);
+            TextColor = #3C3C3C;
+            TextColorDown = black;
+            TextColorHover = black;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+    }
+
+    Button.Button1 {
+        Position = (89.57%, 88.61%);
+        Size = (8.02%, 8.86%);
+        Text = Button;
+        TextSize = 13;
+
+        Renderer {
+            BackgroundColor = #F5F5F5;
+            BackgroundColorDisabled = #E6E6E6;
+            BackgroundColorDown = #EBEBEB;
+            BackgroundColorHover = white;
+            BorderColor = #3C3C3C;
+            BorderColorDisabled = #7D7D7D;
+            BorderColorDown = black;
+            BorderColorFocused = #1E1EB4;
+            BorderColorHover = black;
+            Borders = (1, 1, 1, 1);
+            TextColor = #3C3C3C;
+            TextColorDisabled = #7D7D7D;
+            TextColorDown = black;
+            TextColorHover = black;
+            Texture = None;
+            TextureDisabled = None;
+            TextureDown = None;
+            TextureDownFocused = None;
+            TextureDownHover = None;
+            TextureFocused = None;
+            TextureHover = None;
+        }
+    }
+}

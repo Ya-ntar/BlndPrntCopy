@@ -1,0 +1,272 @@
+Renderer.1 {
+}
+
+Group.running_line {
+    Renderer = &1;
+    Size = (75%, 90);
+
+    TextArea.current_char {
+        HorizontalScrollbarPolicy = Never;
+        IgnoreMouseEvents = true;
+        MaximumCharacters = 1;
+        ReadOnly = true;
+        Size = (30, 22.5);
+        Text = a;
+        TextSize = 20;
+        VerticalScrollbarPolicy = Never;
+
+        Renderer {
+            BackgroundColor = #9D8FFF;
+            BorderColor = black;
+            Borders = (1, 1, 0, 1);
+            CaretColor = black;
+            CaretWidth = 50;
+            DefaultTextColor = #A0A0A0;
+            Padding = (0, 0, 0, 0);
+            SelectedTextBackgroundColor = #006EFF;
+            SelectedTextColor = white;
+            TextColor = white;
+            TextureBackground = None;
+
+            Scrollbar {
+                ArrowBackgroundColor = #F5F5F5;
+                ArrowBackgroundColorHover = white;
+                ArrowColor = #3C3C3C;
+                ArrowColorHover = black;
+                TextureArrowDown = None;
+                TextureArrowDownHover = None;
+                TextureArrowUp = None;
+                TextureArrowUpHover = None;
+                TextureThumb = None;
+                TextureThumbHover = None;
+                TextureTrack = None;
+                TextureTrackHover = None;
+                ThumbColor = #DCDCDC;
+                ThumbColorHover = #E6E6E6;
+                TrackColor = #F5F5F5;
+            }
+        }
+    }
+
+    TextArea.other_string {
+        HorizontalScrollbarPolicy = Never;
+        MaximumCharacters = 0;
+        Position = (30, 0%);
+        ReadOnly = true;
+        Size = (95%, 50);
+        Text = 12345678910111213141516171819202122232425262728293;
+        TextSize = 20;
+        VerticalScrollbarPolicy = Never;
+
+        Renderer {
+            BackgroundColor = black;
+            BorderColor = black;
+            Borders = (0, 1, 1, 1);
+            CaretColor = black;
+            CaretWidth = 50;
+            DefaultTextColor = #A0A0A0;
+            Padding = (0, 0, 0, 0);
+            SelectedTextBackgroundColor = #006EFF;
+            SelectedTextColor = white;
+            TextColor = white;
+            TextureBackground = None;
+
+            Scrollbar {
+                ArrowBackgroundColor = #F5F5F5;
+                ArrowBackgroundColorHover = white;
+                ArrowColor = #3C3C3C;
+                ArrowColorHover = black;
+                TextureArrowDown = None;
+                TextureArrowDownHover = None;
+                TextureArrowUp = None;
+                TextureArrowUpHover = None;
+                TextureThumb = None;
+                TextureThumbHover = None;
+                TextureTrack = None;
+                TextureTrackHover = None;
+                ThumbColor = #DCDCDC;
+                ThumbColorHover = #E6E6E6;
+                TrackColor = #F5F5F5;
+            }
+        }
+    }
+}
+
+Group.time_hits_group {
+    Position = (10, 400);
+    Renderer = &1;
+    Size = (50%, 30);
+
+    TextArea.TextArea3 {
+        DefaultText = "Time left:";
+        HorizontalScrollbarPolicy = Never;
+        MaximumCharacters = 0;
+        ReadOnly = true;
+        Size = (100, 88%);
+        Text = "";
+        TextSize = 15;
+        VerticalScrollbarPolicy = Never;
+
+        Renderer {
+            BackgroundColor = black;
+            BorderColor = black;
+            Borders = (1, 1, 1, 1);
+            CaretColor = black;
+            CaretWidth = 1;
+            DefaultTextColor = #A0A0A0;
+            Padding = (0, 0, 0, 0);
+            SelectedTextBackgroundColor = #006EFF;
+            SelectedTextColor = white;
+            TextColor = #3C3C3C;
+            TextureBackground = None;
+
+            Scrollbar {
+                ArrowBackgroundColor = #F5F5F5;
+                ArrowBackgroundColorHover = white;
+                ArrowColor = #3C3C3C;
+                ArrowColorHover = black;
+                TextureArrowDown = None;
+                TextureArrowDownHover = None;
+                TextureArrowUp = None;
+                TextureArrowUpHover = None;
+                TextureThumb = None;
+                TextureThumbHover = None;
+                TextureTrack = None;
+                TextureTrackHover = None;
+                ThumbColor = #DCDCDC;
+                ThumbColorHover = #E6E6E6;
+                TrackColor = #F5F5F5;
+            }
+        }
+    }
+
+    TextArea.time_area {
+        HorizontalScrollbarPolicy = Never;
+        MaximumCharacters = 5;
+        Position = (100, 0%);
+        ReadOnly = true;
+        Size = (20%, 88%);
+        Text = 12345;
+        TextSize = 15;
+        VerticalScrollbarPolicy = Never;
+
+        Renderer {
+            BackgroundColor = black;
+            BorderColor = black;
+            Borders = (1, 1, 1, 1);
+            CaretColor = black;
+            CaretWidth = 1;
+            DefaultTextColor = #A0A0A0;
+            Padding = (0, 0, 0, 0);
+            SelectedTextBackgroundColor = #006EFF;
+            SelectedTextColor = white;
+            TextColor = white;
+            TextureBackground = None;
+
+            Scrollbar {
+                ArrowBackgroundColor = #F5F5F5;
+                ArrowBackgroundColorHover = white;
+                ArrowColor = #3C3C3C;
+                ArrowColorHover = black;
+                TextureArrowDown = None;
+                TextureArrowDownHover = None;
+                TextureArrowUp = None;
+                TextureArrowUpHover = None;
+                TextureThumb = None;
+                TextureThumbHover = None;
+                TextureTrack = None;
+                TextureTrackHover = None;
+                ThumbColor = #DCDCDC;
+                ThumbColorHover = #E6E6E6;
+                TrackColor = #F5F5F5;
+            }
+        }
+    }
+
+    TextArea.TextArea4 {
+        DefaultText = "Hits:";
+        HorizontalScrollbarPolicy = Never;
+        MaximumCharacters = 0;
+        Position = (50%, 0%);
+        ReadOnly = true;
+        Size = (15%, 88%);
+        Text = "";
+        TextSize = 15;
+        VerticalScrollbarPolicy = Never;
+
+        Renderer {
+            BackgroundColor = black;
+            BorderColor = black;
+            Borders = (1, 1, 1, 1);
+            CaretColor = black;
+            CaretWidth = 1;
+            DefaultTextColor = #A0A0A0;
+            Padding = (0, 0, 0, 0);
+            SelectedTextBackgroundColor = #006EFF;
+            SelectedTextColor = white;
+            TextColor = #3C3C3C;
+            TextureBackground = None;
+
+            Scrollbar {
+                ArrowBackgroundColor = #F5F5F5;
+                ArrowBackgroundColorHover = white;
+                ArrowColor = #3C3C3C;
+                ArrowColorHover = black;
+                TextureArrowDown = None;
+                TextureArrowDownHover = None;
+                TextureArrowUp = None;
+                TextureArrowUpHover = None;
+                TextureThumb = None;
+                TextureThumbHover = None;
+                TextureTrack = None;
+                TextureTrackHover = None;
+                ThumbColor = #DCDCDC;
+                ThumbColorHover = #E6E6E6;
+                TrackColor = #F5F5F5;
+            }
+        }
+    }
+
+    TextArea.hit_area {
+        HorizontalScrollbarPolicy = Never;
+        MaximumCharacters = 0;
+        Position = (65%, 0%);
+        ReadOnly = true;
+        Size = (35%, 88%);
+        Text = 2434453;
+        TextSize = 15;
+        VerticalScrollbarPolicy = Never;
+
+        Renderer {
+            BackgroundColor = black;
+            BorderColor = black;
+            Borders = (1, 1, 1, 1);
+            CaretColor = black;
+            CaretWidth = 1;
+            DefaultTextColor = #A0A0A0;
+            Padding = (0, 0, 0, 0);
+            SelectedTextBackgroundColor = #006EFF;
+            SelectedTextColor = white;
+            TextColor = white;
+            TextureBackground = None;
+
+            Scrollbar {
+                ArrowBackgroundColor = #F5F5F5;
+                ArrowBackgroundColorHover = white;
+                ArrowColor = #3C3C3C;
+                ArrowColorHover = black;
+                TextureArrowDown = None;
+                TextureArrowDownHover = None;
+                TextureArrowUp = None;
+                TextureArrowUpHover = None;
+                TextureThumb = None;
+                TextureThumbHover = None;
+                TextureTrack = None;
+                TextureTrackHover = None;
+                ThumbColor = #DCDCDC;
+                ThumbColorHover = #E6E6E6;
+                TrackColor = #F5F5F5;
+            }
+        }
+    }
+}
