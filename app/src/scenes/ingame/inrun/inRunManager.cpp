@@ -5,7 +5,7 @@
 
 InRunManager::InRunManager(InGameManager *parent, GameContext &context) :
     SceneManager<State::InRun>(context),
-    parent(parent), context(context), info(context), menuBase(context, info),
+    parent(parent),  info(context), menuBase(context, info),
     gen(this, context, info, menuBase) {
   SceneInstruction::setToZero(); // toDo: подумать а тут ли ему место?
 
