@@ -9,7 +9,7 @@ using turnType = std::string; //toDo: change later
 
 class InRunManager;
 
-class InFightManager : public SceneManager<State::InFight>, ItemAffected {
+class InFightManager : public SceneManager<State::InFight>, public ItemAffected {
   RunInfo &runInfo;
   FightInfo fightInfo;
   Layout &menuBase;

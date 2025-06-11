@@ -1,5 +1,6 @@
 #pragma once
 #include <thread>
+#include <format>
 #include <chrono>
 #include "TGUI/TGUI.hpp"
 #include "TGUI/Backend/SFML-Graphics.hpp"
@@ -12,13 +13,12 @@
 #include <string>
 #include <iostream>
 #include "../../../../GameContext.h"
-#include "PlayerParametersFront.h"
+#include "RunInfoFront.h"
 #include "../../../../scenes/Scene.h"
 
-static const char *const BACK_BUTTON = "back";
 // technical
 
-class TemplateFront {
+class SelectableTemplate {
  protected:
   std::shared_ptr<tgui::Group> tmpl;
   std::shared_ptr<tgui::RichTextLabel> pointer;
@@ -42,21 +42,21 @@ class TemplateFront {
     tempGui.removeAllWidgets();
   }
 
- public:
-  TemplateFront() = default;
+  SelectableTemplate() = default;
 
+ public:
   std::shared_ptr<tgui::Group> getTmpl() { return tmpl; }
 };
 
 template<typename Target, typename Parent>
-class SelectableFront : public TemplateFront {
+class SelectableFront : public SelectableTemplate {
  protected:
   std::shared_ptr<tgui::HorizontalLayout> layout;
   Target *target = nullptr;
   Parent *parent = nullptr;
  public:
   SelectableFront(std::shared_ptr<tgui::HorizontalLayout> layout, Target *target, Parent *parent)
-      : TemplateFront(), layout(std::move(layout)), target(target), parent(parent) {}
+      : SelectableTemplate(), layout(std::move(layout)), target(target), parent(parent) {}
 
   [[nodiscard]] bool isSelected() const {
     return parent && parent->getSelector().contains(target);
@@ -90,27 +90,31 @@ class SelectableFront : public TemplateFront {
 };
 
 //player
-class PlayerMenuPanel {
+class InRunPanel {
   RunInfo &runInfo;
   std::string path;
-  std::optional<player::PlayerParametersFront> playerParametersFront;
+  std::optional<RunInfoFront> playerParametersFront;
   std::shared_ptr<tgui::Panel> mainPanel;
   std::shared_ptr<tgui::Panel> mainFreeSpace;
   std::shared_ptr<tgui::Panel> topFreeSpace;
 
-  void reloadPlayerParametersFront(std::shared_ptr<tgui::Group> &where) {
+  void reloadPlayerParametersFront(std::shared_ptr<tgui::Group> const &where) {
     auto curr_hp = where->get<tgui::TextArea>("current_hp");
     auto max_hp = where->get<tgui::TextArea>("max_hp");
     auto curr_err = where->get<tgui::TextArea>("curr_err");
     auto max_err = where->get<tgui::TextArea>("max_err");
-    playerParametersFront.emplace(runInfo.player, curr_hp, max_hp, curr_err, max_err);
+    auto coins = where->get<tgui::TextArea>("coins_info_value");
+    auto deep = where->get<tgui::TextArea>("deep_info_value");
+    auto armour = where->get<tgui::TextArea>("armour_info_value");
+
+    playerParametersFront.emplace(runInfo, curr_hp, max_hp, curr_err, max_err);
   }
 
  public:
-  explicit PlayerMenuPanel(RunInfo &runInfo, std::string path = std::string("forms/base.txt"))
+  explicit InRunPanel(RunInfo &runInfo, std::string path = std::string(Assets::FORM_BASE))
       : runInfo(runInfo), path(std::move(path)) {}
 
-  void setPlayerMenu(std::shared_ptr<tgui::Group> &where) {
+  void setRunMenu(std::shared_ptr<tgui::Group> const &where) {
     tgui::Gui tempGui;
     try {
       tempGui.loadWidgetsFromFile(path);
@@ -123,7 +127,6 @@ class PlayerMenuPanel {
     mainPanel->getRenderer()->setBorderColor(tgui::Color::White);
     mainFreeSpace = tempGui.get<tgui::Panel>("main_free_space");
     topFreeSpace = tempGui.get<tgui::Panel>("top_free_space");
-    auto back = tempGui.get<tgui::Button>("back");
     tempGui.removeAllWidgets();
     mainPanel->setSize("100%", "100%"); //toDo: написать в поддержку tgui, потому что сетсайз забагован
     where->add(mainPanel);
@@ -131,11 +134,11 @@ class PlayerMenuPanel {
     reloadPlayerParametersFront(where);
   }
 
-  std::shared_ptr<tgui::Panel> getMainFreeSpace() { return mainFreeSpace; }
+  [[nodiscard]] std::shared_ptr<tgui::Panel> getMainFreeSpace() const { return mainFreeSpace; }
 
-  std::shared_ptr<tgui::Panel> getTopFreeSpace() { return topFreeSpace; }
+  [[nodiscard]] std::shared_ptr<tgui::Panel> getTopFreeSpace() const { return topFreeSpace; }
 
-  std::shared_ptr<tgui::Panel> get() { return mainPanel; }
+  std::shared_ptr<tgui::Panel> get() const { return mainPanel; }
 
   [[nodiscard]] bool hasBeenLoaded() const { return playerParametersFront.has_value(); }
 
@@ -207,8 +210,7 @@ class MobSelectable : public Settable {
 };
 
 inline void MobView::init() {
-  loadTemplateWidgets("forms/standard/fighting/MobBase.txt",
-                      "mob" + std::to_string(mob.getUniqueId()));
+  loadTemplateWidgets(Assets::FORM_MOB_BASE, std::format("mob{}", mob.getUniqueId()));
   update_all();
   pic->onClick([this] {
     setSelected(true);
@@ -238,10 +240,10 @@ inline void MobView::update_all() {
   pic->setText(mob.getType().getImage());
   std::string HPColor = HPColoring.empty() ? "white" : HPColoring;
   std::string DMGColor = DMGColoring.empty() ? "white" : DMGColoring;
-  tgui::String dsc = "<color=" + HPColor + ">" + std::to_string(mob.getCurrentHp())
-      + "/" + std::to_string(mob.getType().getMaxHp()) + "</color>";
-  dsc += "<color=" + DMGColor + ">" + " DMG: " +
-      std::to_string(mob.getType().getAttackPower()) + "</color>";
+  tgui::String dsc;
+  dsc = std::format("<color={}>{}/{}</color><color={}>DMG: {}</color>",
+                    HPColor, mob.getCurrentHp(), mob.getType().getMaxHp(),
+                    DMGColor, mob.getType().getAttackPower());
   info->setText(dsc);
   updateSelectionVisual();
 }
@@ -253,20 +255,19 @@ class Layout {
   std::shared_ptr<tgui::Group> up;
   std::shared_ptr<tgui::Group> middle;
   std::shared_ptr<tgui::Group> down;
-  RunInfo &runInfo;
-  PlayerMenuPanel playerMenuPanel;
+  InRunPanel player_menu_panel_;
   std::unique_ptr<Settable> middleView;
  public:
-  Layout(GameContext &context, RunInfo &runInfo, std::string path = std::string("forms/base.txt"))
-      : context(context), runInfo(runInfo), playerMenuPanel(runInfo, std::move(path)) {
+  Layout(GameContext &context, RunInfo &runInfo, std::string path = std::string(Assets::FORM_BASE))
+      : context(context), player_menu_panel_(runInfo, std::move(path)), runInfo(runInfo) {
     init();
   }
 
   tgui::Gui &getGui() { return context.gui; }
 
-  std::shared_ptr<tgui::Panel> getMainFreeSpace() { return playerMenuPanel.getMainFreeSpace(); }
+  std::shared_ptr<tgui::Panel> getMainFreeSpace() { return player_menu_panel_.getMainFreeSpace(); }
 
-  std::shared_ptr<tgui::Panel> getTopFreeSpace() { return playerMenuPanel.getTopFreeSpace(); }
+  std::shared_ptr<tgui::Panel> getTopFreeSpace() { return player_menu_panel_.getTopFreeSpace(); }
 
   GameContext &getContext() { return context; }
 
@@ -277,9 +278,9 @@ class Layout {
 
   player::Player &getPlayer() { return runInfo.player; }
 
-  [[nodiscard]] bool hasBeenLoaded() const { return playerMenuPanel.hasBeenLoaded(); }
+  [[nodiscard]] bool hasBeenLoaded() const { return player_menu_panel_.hasBeenLoaded(); }
 
-  std::shared_ptr<tgui::Panel> get() { return playerMenuPanel.get(); }
+  std::shared_ptr<tgui::Panel> get() { return player_menu_panel_.get(); }
 
   void load() {
     gui.removeAllWidgets();
@@ -303,7 +304,7 @@ class Layout {
     middle->setPosition({"0%", "10%"});
     down->setSize("100%", "30%");
     down->setPosition({"0%", "70%"});
-    playerMenuPanel.setPlayerMenu(down);
+    player_menu_panel_.setRunMenu(down);
   }
 
   void clear() {
@@ -311,8 +312,9 @@ class Layout {
     up.reset();
     down.reset();
     middle.reset();
-    playerMenuPanel.clear();
+    player_menu_panel_.clear();
   }
+  RunInfo &runInfo;
 };
 
 

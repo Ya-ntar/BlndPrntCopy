@@ -12,8 +12,8 @@ class HomeBaseScene : public Scene {
  public:
   explicit HomeBaseScene(InGameManager *parent, GameContext &context,
                          std::string path = "forms/homebase.txt") :
-      parent(parent),
-      Scene(context), path(std::move(path)) {
+      Scene(context),
+      path(std::move(path)), parent(parent) {
   };
 
   void clear() override {

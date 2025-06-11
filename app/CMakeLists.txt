@@ -7,6 +7,7 @@ set(SFML_DIR "D:/LibrariesCompilers/SFML/lib/cmake/SFML")
 
 find_package(SFML 3 REQUIRED COMPONENTS Graphics Audio Network)
 
+
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 set(SOURCE_DIRS
@@ -52,14 +53,14 @@ FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download
 FetchContent_MakeAvailable(json)
 
 
-target_link_libraries(blind_print PRIVATE  nlohmann_json::nlohmann_json TGUI::TGUI SFML::Audio)
+target_link_libraries(blind_print PRIVATE nlohmann_json::nlohmann_json TGUI::TGUI SFML::Audio)
 
 # === Тесты ===
 project(test_ItemManager)
 FetchContent_Declare(
         Catch2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-        GIT_TAG        v3.4.0 # or a later release
+        GIT_TAG v3.4.0 # or a later release
 )
 FetchContent_MakeAvailable(Catch2)
 

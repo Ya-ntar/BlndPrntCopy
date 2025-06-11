@@ -36,7 +36,7 @@ class MenuScene : public Scene {
   void load() override;
 
   void handleEvent(const std::optional<sf::Event> &_event) override {
-    //most scenes don't have special functionality
+    //most scenes don't have special functionality, but many do
   };
 
 };

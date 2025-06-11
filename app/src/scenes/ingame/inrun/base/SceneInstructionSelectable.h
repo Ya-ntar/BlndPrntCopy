@@ -16,7 +16,7 @@
 
 class SceneInstructionSelectable;
 
-class SceneInstructionView : public TemplateFront {
+class SceneInstructionView : public SelectableTemplate {
   SceneInstruction &instruction;
   SceneInstructionSelectable *parent = nullptr;
  public:

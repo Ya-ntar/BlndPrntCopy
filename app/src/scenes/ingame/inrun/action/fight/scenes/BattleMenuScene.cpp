@@ -6,13 +6,16 @@
 
 void BattleMenuScene::loadGraphics() {
   base.load();
-  if (auto backButton = base.getGui().get<tgui::Button>(BACK_BUTTON)) {
+  if (auto backButton = base.getGui().get<tgui::Button>("back")) {
     backButton->setText("Run away");
     backButton->onPress([&] {
       parent->runAway();
     });
   }
 
+  if (auto info = base.getGui().get<tgui::TextArea>("menu_info")){
+    info->setText("Battle Menu");
+  }
   tgui::Gui tempGui;
   try { tempGui.loadWidgetsFromFile(path); }
   catch (const tgui::Exception &e) {

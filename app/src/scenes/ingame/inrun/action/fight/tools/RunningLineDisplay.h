@@ -56,17 +56,17 @@ class ColorLineDisplay : textProcessDisplay, SmartSubscriber {
 };
 
 class RunningLineDisplay : textProcessDisplay, SmartSubscriber {
-  const player::Player &player;
+  RunInfo &runInfo;
   std::shared_ptr<tgui::TextArea> activeChar;
   std::shared_ptr<tgui::TextArea> mainString;
  public:
 
   RunningLineDisplay(std::shared_ptr<tgui::TextArea> active_char,
-                     std::shared_ptr<tgui::TextArea> main_string, const player::Player &player,
+                     std::shared_ptr<tgui::TextArea> main_string, RunInfo &runInfo,
                      QueuedMessageBus &bus) :
       SmartSubscriber(bus),
       activeChar(std::move(active_char)),
-      mainString(std::move(main_string)), player(player) {
+      mainString(std::move(main_string)), runInfo(runInfo) {
 
     subscribeSmartly<AttackLogicStateChange>(
         [this](const AttackLogicStateChange &msg) {
@@ -81,12 +81,12 @@ class RunningLineDisplay : textProcessDisplay, SmartSubscriber {
     activeChar->getRenderer()->setTextColor(tgui::Color::White);
     mainString->getRenderer()->setTextColor("#808080");
 
-    activeChar->setText(player.getActiveChar());
-    mainString->setText(player.getMainString());
-    if (player.getActiveChar() == U'\n') { //toDo: плохо пахнет, подумать как правильно
-      mainString->setText(player.getActiveChar() + player.getMainString());
+    activeChar->setText(runInfo.getActiveChar());
+    mainString->setText(runInfo.getMainString());
+    if (runInfo.getActiveChar() == U'\n') { //toDo: плохо пахнет, подумать как правильно
+      mainString->setText(runInfo.getActiveChar() + runInfo.getMainString());
     }
-    mainString->setMaximumCharacters(player.getHowManyVisibleLetters());
+    mainString->setMaximumCharacters(runInfo.getHowManyVisibleLetters());
     mainString->setCaretPosition(0);
     mainString->getHorizontalScrollbar()->setValue(0);
     mainString->getVerticalScrollbar()->setValue(0);

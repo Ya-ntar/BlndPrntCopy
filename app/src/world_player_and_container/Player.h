@@ -7,7 +7,6 @@
 #include "../text_processing/backEnd/tools/TextHolder.h"
 
 #include "BoundedValue.h"
-#include "../scenes/ingame/inrun/base/FillableDisplayer.h"
 #include "../GameContext.h"
 #include "ItemManager.h"
 #include "../utils/Utils.h"
@@ -26,7 +25,6 @@ struct PlayerContext {
 
 class Player : public SmartSubscriber {
   QueuedMessageBus &bus;
-  TextHolder &current_text_;
   PlayerContext context;
 
  private:
@@ -55,37 +53,13 @@ class Player : public SmartSubscriber {
   }
 
  public:
-  Player(QueuedMessageBus &bus, TextHolder &currentText, PlayerContext startingPlayerContext) :
-      SmartSubscriber(bus), bus(bus), current_text_(currentText),
-      context(startingPlayerContext) {
+  Player(QueuedMessageBus &bus, PlayerContext const& startingPlayerContext) :
+      SmartSubscriber(bus), bus(bus), context(startingPlayerContext) {
     subscribeToEverything();
-
-  }
-
-  TextHolder &getTextHolder() {
-    return current_text_;
   }
 
   [[nodiscard]] size_t getHowManyVisibleLetters() const {
     return context.how_many_visible_letters_;
-  }
-
-  [[nodiscard]] tgui::String getActiveChar() const {
-    if (current_text_.isEmpty()) {
-      return "";
-    }
-    return current_text_.getFirstChar();
-  }
-
-  [[nodiscard]] tgui::String getMainString() const {
-
-    assert(context.how_many_visible_letters_ <= current_text_.maxSize() &&
-        "Visible length should be smaller, or it becomes = holder.maxsize()");
-    auto txt(current_text_.currentText(context.how_many_visible_letters_));
-    if (txt.size() <= 1) {
-      return "";
-    }
-    return txt.substr(1);
   }
 
   [[nodiscard]] const BoundedValue &getHp() const {

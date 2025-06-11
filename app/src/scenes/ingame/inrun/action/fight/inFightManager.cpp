@@ -18,11 +18,11 @@ InFightManager::InFightManager(InRunManager *parent,
                                RunInfo &runInfo,  // хочу проглотить fightInfo
                                FightInfo &fightInfo,
                                Layout &base) :
-    parent(parent),
     SceneManager<State::InFight>(context),
     runInfo(runInfo),
     fightInfo(std::move(fightInfo)),
-    menuBase(base) {
+    menuBase(base),
+    parent(parent) {
 
   subscribeToAll();
   addReaction("InkBottle", [&](const Item &item) {

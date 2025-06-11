@@ -3,7 +3,7 @@
 #include "TGUI/TGUI.hpp"
 #include "TGUI/Backend/SFML-Graphics.hpp"
 #include "../../../GameContext.h"
-#include "base/PlayerParametersFront.h"
+#include "base/RunInfoFront.h"
 #include "base/Layout.h"
 #include "InRunManager.h"
 
@@ -12,7 +12,7 @@ class InventoryMenu : public Scene {
   RunInfo &runInfo;
   ItemAffected &mainScene;
   Layout &menuBase;
-  std::string path = "forms/inventory.txt";
+  std::string path = Assets::FORM_INVENTORY;
   InRunManager &parent;
 
   void reloadInventory() {
@@ -76,7 +76,7 @@ class InventoryMenu : public Scene {
     menuBase.getMainFreeSpace()->add(inventoryPanel);
     reloadInventory();
 
-    if (auto backButton = menuBase.getGui().get<tgui::Button>(BACK_BUTTON)) {
+    if (auto backButton = menuBase.getGui().get<tgui::Button>("back")) {
       backButton->onPress([&] {
         parent.hideInventory();
       });

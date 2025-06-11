@@ -5,7 +5,7 @@
 #include "../InGameManager.h"
 
 void CrossroadScene::makeMenuButtons() {
-  if (auto backButton = menuBase.getGui().get<tgui::Button>(BACK_BUTTON)) {
+  if (auto backButton = menuBase.getGui().get<tgui::Button>("back")) {
     backButton->setText("Run away");
     backButton->onPress([this] {
       parent->ranAwayHome();

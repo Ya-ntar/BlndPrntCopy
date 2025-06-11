@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "TGUI/Backend/SFML-Graphics.hpp"
@@ -28,7 +27,7 @@ class AttackLogic {
  public:
 
   AttackLogic(QueuedMessageBus &bus, TextHolder &th, const float &time)
-      : bus(bus), textProcessor(th), time(time) {
+      : bus(bus), time(time), textProcessor(th) {
   }
 
   void start() {
@@ -45,11 +44,12 @@ class AttackLogic {
   void processSymbol(const string &symbol) {
     auto val = textProcessor.checkKey(symbol);
     switch (val) {
-      case textProcessing::CharCheckState::CORRECT_INPUT:textProcessor.next();
+      using enum textProcessing::CharCheckState;
+      case CORRECT_INPUT:textProcessor.next();
         hits++;
         break;
-      case textProcessing::CharCheckState::INCORRECT_INPUT:break;
-      case textProcessing::CharCheckState::NOTHING:break;
+      case INCORRECT_INPUT:break;
+      case NOTHING:break;
     }
     bus.add(textProcessing::TextProcessStateMsg{.val = val});
     currentState = val;
@@ -63,11 +63,11 @@ class InputProcessor {
 
  public:
   explicit InputProcessor() = default;
-
+  virtual ~InputProcessor() = default;
   virtual void handleEvent(const std::optional<sf::Event> &_event) = 0;
 };
 
-class AtkInput : InputProcessor {
+class AtkInput : public InputProcessor {
  private:
   AttackLogic &logic;
 
@@ -96,7 +96,7 @@ class AttackMenu {
 
  public:
   explicit AttackMenu(Layout &menuBase, std::string path = "base.txt") :
-      menuBase(menuBase), path(std::move(path)) {
+      path(std::move(path)), menuBase(menuBase) {
   }
 
   [[nodiscard]] bool wasCreated() const {
@@ -110,7 +110,7 @@ class AttackMenu {
     try { tempGui.loadWidgetsFromFile(path); }
     catch (const tgui::Exception &e) {
       std::cerr << "Failed to load Attack widgets: " << e.what() << std::endl;
-      throw e;
+      throw;
     }
 
     auto active_char = tempGui.get<tgui::TextArea>("current_char");
@@ -140,7 +140,7 @@ class AttackMenu {
 
     hitsTime.emplace(ATK_TIMER_NAME, hitArea, timeArea,
                      menuBase.getContext().queueBus); //toDo: подумать о проблеме типов таймера
-    runningLine.emplace(active_char, other_string, menuBase.getPlayer(), menuBase.getContext().queueBus);
+    runningLine.emplace(active_char, other_string, menuBase.runInfo, menuBase.getContext().queueBus);
     runningLine.value().update();
 
   }
