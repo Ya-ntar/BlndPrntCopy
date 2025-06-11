@@ -1,0 +1,46 @@
+name: Google C++ Code Style Check
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  check-style:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y clang-format python3-pip
+        
+    - name: Install cpplint
+      run: pip install cpplint
+        
+    - name: Create .clang-format config
+      run: |
+        echo "BasedOnStyle: Google" > .clang-format
+        echo "ColumnLimit: 80" >> .clang-format
+        echo "IndentWidth: 2" >> .clang-format
+        echo "UseTab: Never" >> .clang-format
+        echo "AllowShortIfStatementsOnASingleLine: false" >> .clang-format
+        echo "AllowShortLoopsOnASingleLine: false" >> .clang-format
+        echo "BreakBeforeBraces: Allman" >> .clang-format
+        
+    - name: Run clang-format check
+      run: |
+        find . -name '*.h' -o -name '*.hpp' -o -name '*.cpp' -o -name '*.cc' | \
+        xargs clang-format --dry-run --Werror
+        
+    - name: Run cpplint
+      run: |
+        find . -name '*.h' -o -name '*.hpp' -o -name '*.cpp' -o -name '*.cc' | \
+        xargs cpplint --root=. --filter=-build/include_subdir,-build/header_guard
