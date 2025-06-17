@@ -29,9 +29,10 @@ class textProcessDisplay {
     }
   };
 
+  virtual ~textProcessDisplay() = default;
 };
 
-class ColorLineDisplay : textProcessDisplay, SmartSubscriber {
+class ColorLineDisplay : public textProcessDisplay, public SmartSubscriber {
   std::shared_ptr<tgui::RichTextLabel> text;
 
  public:
@@ -55,18 +56,17 @@ class ColorLineDisplay : textProcessDisplay, SmartSubscriber {
 
 };
 
-class RunningLineDisplay : textProcessDisplay, SmartSubscriber {
+class RunningLineDisplay : public textProcessDisplay, public SmartSubscriber {
   RunInfo &runInfo;
-  std::shared_ptr<tgui::TextArea> activeChar;
-  std::shared_ptr<tgui::TextArea> mainString;
+  std::shared_ptr<tgui::RichTextLabel> mainString;
  public:
 
-  RunningLineDisplay(std::shared_ptr<tgui::TextArea> active_char,
-                     std::shared_ptr<tgui::TextArea> main_string, RunInfo &runInfo,
+  RunningLineDisplay(std::shared_ptr<tgui::RichTextLabel> active_char,
+                     std::shared_ptr<tgui::RichTextLabel> main_string, RunInfo &runInfo,
                      QueuedMessageBus &bus) :
       SmartSubscriber(bus),
-      activeChar(std::move(active_char)),
-      mainString(std::move(main_string)), runInfo(runInfo) {
+      runInfo(runInfo),
+      mainString(std::move(main_string)) {
 
     subscribeSmartly<AttackLogicStateChange>(
         [this](const AttackLogicStateChange &msg) {
@@ -77,27 +77,20 @@ class RunningLineDisplay : textProcessDisplay, SmartSubscriber {
   };
 
   void update() override {
-    activeChar->getRenderer()->setBackgroundColor("#141359");
-    activeChar->getRenderer()->setTextColor(tgui::Color::White);
-    mainString->getRenderer()->setTextColor("#808080");
 
-    activeChar->setText(runInfo.getActiveChar());
-    mainString->setText(runInfo.getMainString());
-    if (runInfo.getActiveChar() == U'\n') { //toDo: плохо пахнет, подумать как правильно
-      mainString->setText(runInfo.getActiveChar() + runInfo.getMainString());
-    }
-    mainString->setMaximumCharacters(runInfo.getHowManyVisibleLetters());
-    mainString->setCaretPosition(0);
-    mainString->getHorizontalScrollbar()->setValue(0);
-    mainString->getVerticalScrollbar()->setValue(0);
+    mainString->setTextSize(24);
+    mainString->setText("<color=white>" + runInfo.getActiveChar()
+    + "</color><color=#808080>" + runInfo.getMainString() + "</color>");
+
+
   }
 
   void errorReaction() override {
-    activeChar->getRenderer()->setBackgroundColor(tgui::Color::Red);
+    mainString->setText("<color=red>" + runInfo.getActiveChar()
+                            + "</color><color=white>" + runInfo.getMainString() + "</color>");
   }
 
-  void set(tgui::TextArea::Ptr newActiveChar, tgui::TextArea::Ptr newMainString) {
-    this->activeChar = std::move(newActiveChar);
+  void set(tgui::RichTextLabel::Ptr newMainString) {
     this->mainString = std::move(newMainString);
   }
 };

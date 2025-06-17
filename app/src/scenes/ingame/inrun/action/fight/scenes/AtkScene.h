@@ -44,7 +44,8 @@ class AttackLogic {
   void processSymbol(const string &symbol) {
     auto val = textProcessor.checkKey(symbol);
     switch (val) {
-      using enum textProcessing::CharCheckState;
+      using
+      enum textProcessing::CharCheckState;
       case CORRECT_INPUT:textProcessor.next();
         hits++;
         break;
@@ -53,8 +54,7 @@ class AttackLogic {
     }
     bus.add(textProcessing::TextProcessStateMsg{.val = val});
     currentState = val;
-    bus.add(textProcessing::AttackLogicStateChange{.state = currentState,
-        .currentTextHolder= textProcessor.getTextHolder(), .hits = hits});
+    bus.add(textProcessing::AttackLogicStateChange{.state = currentState, .hits = hits});
   }
 
 };
@@ -89,70 +89,123 @@ class AtkInput : public InputProcessor {
 
 class AttackMenu {
   std::string path;
-  std::optional<textProcessing::RunningLineDisplay> runningLine;
+  GameContext& context;
+  RunInfo &run_info_;
+  std::shared_ptr<tgui::Panel> mainPanel;
+  std::shared_ptr<tgui::Group> runningLineGroup;
+  std::shared_ptr<tgui::Group> timeHitsGroup;
+  std::shared_ptr<tgui::RichTextLabel> textDisplay;
+  std::shared_ptr<tgui::RichTextLabel> hitArea;
+  std::shared_ptr<tgui::RichTextLabel> timeArea;
   std::optional<HitsTime> hitsTime;
+  textProcessing::RunningLineDisplay runningLine;
 
-  Layout &menuBase;
-
- public:
-  explicit AttackMenu(Layout &menuBase, std::string path = "base.txt") :
-      path(std::move(path)), menuBase(menuBase) {
+  static void configureRichTextLabel(std::shared_ptr<tgui::RichTextLabel> label, 
+                                   const tgui::Color& backgroundColor = tgui::Color::Black,
+                                   const tgui::Color& borderColor = tgui::Color::White,
+                                   const tgui::Color& textColor = tgui::Color::White,
+                                   tgui::VerticalAlignment verticalAlign = tgui::VerticalAlignment::Center,
+                                   tgui::HorizontalAlignment horizontalAlign = tgui::HorizontalAlignment::Left,
+                                   unsigned int textSize = 0) {
+    label->setSize("100%", "100%");
+    if (textSize > 0) {
+      label->setTextSize(textSize);
+    }
+    label->getRenderer()->setBackgroundColor(backgroundColor);
+    label->getRenderer()->setBorderColor(borderColor);
+    label->getRenderer()->setTextColor(textColor);
+    label->setVerticalAlignment(verticalAlign);
+    label->setHorizontalAlignment(horizontalAlign);
   }
 
-  [[nodiscard]] bool wasCreated() const {
-    return menuBase.hasBeenLoaded() && runningLine.has_value();
+  void createWidgets() {
+    // Create main panel
+    mainPanel = tgui::Panel::create();
+    mainPanel->setSize("100%", "100%");
+    mainPanel->getRenderer()->setBackgroundColor(tgui::Color::Black);
+
+    auto middle = context.gui.get<tgui::Panel>("main_free_space");
+    middle->add(mainPanel);
+
+
+    runningLineGroup = tgui::Group::create();
+    runningLineGroup->setPosition("5%", "0%");
+    runningLineGroup->setSize("90%", "30%");
+    mainPanel->add(runningLineGroup);
+
+    textDisplay = tgui::RichTextLabel::create();
+    configureRichTextLabel(textDisplay, tgui::Color::Black, tgui::Color::White, tgui::Color::White, 
+                          tgui::VerticalAlignment::Center, tgui::HorizontalAlignment::Left);
+    runningLineGroup->add(textDisplay);
+
+
+    timeHitsGroup = tgui::Group::create();
+    timeHitsGroup->setPosition("0%", "0%");
+    timeHitsGroup->setSize("100%", "100%");
+
+    auto top = context.gui.get<tgui::Panel>("top_free_space");
+    top->add(timeHitsGroup);
+
+
+    auto statsLayout = tgui::HorizontalLayout::create();
+    statsLayout->setSize("100%", "100%");
+    timeHitsGroup->add(statsLayout);
+
+    // Create hit area
+    hitArea = tgui::RichTextLabel::create();
+    configureRichTextLabel(hitArea, tgui::Color::Black, tgui::Color::Black, tgui::Color::White, 
+                          tgui::VerticalAlignment::Center, tgui::HorizontalAlignment::Center, 17);
+    hitArea->setText("<color=white>Hits: 0</color>");
+    statsLayout->add(hitArea);
+
+    
+    timeArea = tgui::RichTextLabel::create();
+    configureRichTextLabel(timeArea, tgui::Color::Black, tgui::Color::Black, tgui::Color::White, 
+                          tgui::VerticalAlignment::Center, tgui::HorizontalAlignment::Center, 17);
+    timeArea->setText("<color=white>Time: </color>");
+    statsLayout->add(timeArea);
+  }
+
+  void updateText(const tgui::String& currentChar, const tgui::String& otherText) {
+    if (currentChar.empty()) {
+      textDisplay->setText("");
+      return;
+    }
+    // Highlight first character in red, rest in white
+    textDisplay->setText("<color=red>" + currentChar + "</color><color=white>" + otherText + "</color>");
+  }
+
+ public:
+  explicit AttackMenu(GameContext &context, RunInfo &run_info_, std::string path) :
+      path(std::move(path)), 
+      context(context), 
+      run_info_(run_info_),
+      runningLine(nullptr, nullptr, run_info_, context.queueBus) {
+    createWidgets();
+    runningLine.set(textDisplay);
   }
 
   void load() {
-    menuBase.load();
-    //mobBase.load();
-    tgui::Gui tempGui;
-    try { tempGui.loadWidgetsFromFile(path); }
-    catch (const tgui::Exception &e) {
-      std::cerr << "Failed to load Attack widgets: " << e.what() << std::endl;
-      throw;
-    }
-
-    auto active_char = tempGui.get<tgui::TextArea>("current_char");
-    auto other_string = tempGui.get<tgui::TextArea>("other_string");
-    auto running_line = tempGui.get<tgui::Group>("running_line");
-
-    auto gp = tempGui.get<tgui::Group>("time_hits_group");
-    auto hitArea = tempGui.get<tgui::TextArea>("hit_area");
-    auto timeArea = tempGui.get<tgui::TextArea>("time_area");
-
-    tempGui.remove(running_line);
-    tempGui.remove(gp);
-
-    {
-      menuBase.getMainFreeSpace()->add(running_line);
-      running_line->setPosition({"5%", "0%"});
-      running_line->setSize({"90%", "50%"});
-      other_string->setCaretPosition(0);
-    }
-    {
-      menuBase.getTopFreeSpace()->add(gp);
-      gp->setPosition({"0%", "0%"});
-      gp->setSize({"100%", "100%"});
-      timeArea->setText("");
-      hitArea->setText("0");
-    }
-
-    hitsTime.emplace(ATK_TIMER_NAME, hitArea, timeArea,
-                     menuBase.getContext().queueBus); //toDo: подумать о проблеме типов таймера
-    runningLine.emplace(active_char, other_string, menuBase.runInfo, menuBase.getContext().queueBus);
-    runningLine.value().update();
-
+    hitsTime.emplace(ATK_TIMER_NAME, hitArea, timeArea, context.queueBus);
+    runningLine.update();
   }
 
   void clear() {
-    menuBase.clear();
-    runningLine.reset();
-
+    hitsTime.reset();
+    
+    if (mainPanel) {
+      context.gui.remove(mainPanel);
+      mainPanel.reset();
+      runningLineGroup.reset();
+      timeHitsGroup.reset();
+      textDisplay.reset();
+      hitArea.reset();
+      timeArea.reset();
+    }
   }
 
   tgui::Gui &getGui() {
-    return menuBase.getGui();
+    return context.gui;
   }
 };
 
@@ -166,7 +219,7 @@ class AtkScene : public Scene {
   AttackMenu menu;
 
  public:
-  AtkScene(InFightManager *parent, RunInfo &runInfo, Layout &base,
+  AtkScene(InFightManager *parent, RunInfo &runInfo, GameContext &base,
            std::string pathToAtk = "forms/attack_widgets.txt");
 
   void handleEvent(const std::optional<sf::Event> &_event) override {
@@ -178,7 +231,6 @@ class AtkScene : public Scene {
   void loadGraphics() override;
 
   int32_t endAtk() {
-    menu.clear();
     return logic.end();
   }
 

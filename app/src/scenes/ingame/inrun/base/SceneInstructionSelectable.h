@@ -20,7 +20,7 @@ class SceneInstructionView : public SelectableTemplate {
   SceneInstruction &instruction;
   SceneInstructionSelectable *parent = nullptr;
  public:
-  SceneInstructionView(const std::shared_ptr<tgui::HorizontalLayout> &layout,
+  SceneInstructionView(
                        SceneInstruction &instruction,
                        SceneInstructionSelectable *parent)
       : instruction(instruction), parent(parent) {
@@ -54,7 +54,7 @@ class SceneInstructionSelectable : public Settable {
     instructionPlace->setSize({"100%", "50%"});
     instructionPlace->setPosition("0%", "10%");
     for (auto &instr : instructions) {
-      fronts.emplace_back(instructionPlace, instr, this);
+      fronts.emplace_back(instr, this);
       instructionPlace->add(fronts.back().getTmpl());
     }
     setMain(instructionPlace);

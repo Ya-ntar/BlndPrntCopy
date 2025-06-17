@@ -2,6 +2,7 @@
 #include "../InGameManager.h"
 #include "InventoryMenu.h"
 #include "CrossroadScene.h"
+#include "BookMenu.h"
 
 InRunManager::InRunManager(InGameManager *parent, GameContext &context) :
     SceneManager<State::InRun>(context),
@@ -42,7 +43,16 @@ void InRunManager::ranAwayFromAFight() {
 }
 
 void InRunManager::showInventory(ItemAffected &mainScene) {
-  addScene(std::make_unique<InventoryMenu>(context, info, mainScene, menuBase, *this));
+  addScene(std::make_unique<InventoryMenu>(context, info, mainScene,  *this));
+  activeScenes[activeScenes.size() - 1]->loadGraphics();
+}
+void InRunManager::showChangeArmour(ItemAffected &mainScene) {
+  addScene(std::make_unique<InventoryMenu>(context, info, mainScene,  *this));
+  activeScenes[activeScenes.size() - 1]->loadGraphics();
+}
+
+void InRunManager::showBookMenu() {
+  addScene(std::make_unique<BookMenu>(context, info, *this));
   activeScenes[activeScenes.size() - 1]->loadGraphics();
 }
 

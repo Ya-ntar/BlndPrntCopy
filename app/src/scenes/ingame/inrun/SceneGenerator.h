@@ -48,11 +48,9 @@ class SceneGenerator {
     if (instruction.type == SceneInstruction::Type::FIGHT) {
       FightInfo fightInfo;
       for (const auto &mobName : instruction.mobs) {
-        fightInfo.mobs.emplace_back(context.mobDatabase.createMob(context.queueBus, mobName));
+        fightInfo.addMob( context.mobDatabase.createMob(context.queueBus, mobName));
       }
-      if (!fightInfo.mobs.empty()) {
-        fightInfo.currentlyUnderAttack.insert(fightInfo.mobs.data());
-      }
+
       return std::make_unique<InFightManager>(parent, context, runInfo, fightInfo, menuBase);
     }
     return nullptr;

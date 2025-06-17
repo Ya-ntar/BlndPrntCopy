@@ -3,6 +3,7 @@
 #include "GameContext.h"
 #include <SFML/Audio.hpp>
 #include "utils/Utils.h"
+#include "utils/ErrorHandler.h"
 
 static const int WINDOW_SIZE = 800;
 class Game {
@@ -21,26 +22,33 @@ class Game {
 
   int run() {
     SoundGetter sound_getter;
+    context.loadMobs();
     MainManager mainManager(context);
     mainManager.load();
 
-    while (window.isOpen()) {
-      mainManager.processDeferred();
-      while (const std::optional _event = window.pollEvent()) {
-        if (_event->is<sf::Event::Closed>()) {
-          window.close();
+    while (window.isOpen()) { 
+      try {
+        mainManager.processDeferred();
+        while (const std::optional _event = window.pollEvent()) {
+          if (_event->is<sf::Event::Closed>()) {
+            window.close();
+          }
+          if (_event->is<sf::Event::KeyPressed>()) {
+            sound_getter.play();
+          }
+          mainManager.handleEvent(_event.value());
+          context.gui.handleEvent(_event.value());
         }
-        if (_event->is<sf::Event::KeyPressed>()) {
-          sound_getter.play();
-        }
-        mainManager.handleEvent(_event.value());
-        context.gui.handleEvent(_event.value());
-      }
-      context.queueBus.processLast();
-      window.clear();
+        context.queueBus.processLast();
+        window.clear();
 
-      context.gui.draw();
-      window.display();
+        context.gui.draw();
+        window.display();
+      }
+      catch (const std::exception &e) {
+        error::logError(e.what());
+        return 1;
+      }
     }
     return 0;
   }

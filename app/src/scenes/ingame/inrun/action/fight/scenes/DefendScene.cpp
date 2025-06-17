@@ -6,10 +6,10 @@
 
 void DefendScene::loadGraphics() { //toDo: переделать...
   base.load();
-  for (auto &mob : fightInfo.mobs) {
+  for (auto const &mob : fightInfo.mobs) {
 
     context.queueBus.
-        add(mob::MobAttacking{.damage = mob.getType().getAttackPower(), .target = mob.getUniqueId()});
+        add(mob::MobAttacking{.damage = mob.second.getType().getAttackPower(), .target = mob.first});
     //runInfo.player.damageHP(mob.getType().getAttackPower());
   };
   parent->changeScene(State::InFight::BattleMenu);

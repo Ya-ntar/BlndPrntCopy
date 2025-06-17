@@ -5,43 +5,39 @@
 #include "../../../GameContext.h"
 #include "InRunManager.h"
 
-class InventoryMenu : public Scene {
+
+class BookMenu : public Scene {
   RunInfo &runInfo;
-  ItemAffected &mainScene;
+  std::string path = Assets::FORM_INVENTORY;
   InRunManager &parent;
   std::shared_ptr<tgui::Panel> mainPanel;
-  std::shared_ptr<tgui::ScrollablePanel> inventoryPanel;
+  std::shared_ptr<tgui::ScrollablePanel> bookPanel;
   std::shared_ptr<tgui::Button> backButton;
 
-  void reloadInventory() {
-    auto vLayout = inventoryPanel->get<tgui::GrowVerticalLayout>("vLayout");
+  void reloadBooks() {
+    auto vLayout = bookPanel->get<tgui::GrowVerticalLayout>("vLayout");
     if (!vLayout) {
       vLayout = tgui::GrowVerticalLayout::create();
-      inventoryPanel->add(vLayout, "vLayout");
+      bookPanel->add(vLayout, "vLayout");
     }
     vLayout->removeAllWidgets();
 
-    const auto &inventory(runInfo.getManager().getItemMap());
-    for (const auto &item : inventory) {
+    for (const auto &pair : runInfo.getBooks()) {
+      const auto &book = pair.second;
       auto hLayout = tgui::GrowHorizontalLayout::create();
 
-      string btnName = item.first.getName();
-      if (item.second > 1) {
-        btnName += " (" + std::to_string(item.second) + ")";
-      }
-
+      std::string btnName = book.getName();
       auto button = tgui::Button::create(btnName);
       button->setSize("150", "30");
       button->getRenderer()->setBorderColor(tgui::Color::White);
       button->getRenderer()->setBackgroundColor(tgui::Color::Black);
       button->getRenderer()->setTextColor(tgui::Color::White);
-      button->onPress([&, item] {
-        runInfo.getManager().useItem(mainScene, item.first);
-        reloadInventory();
+      button->onPress([this, id = book.getId()] {
+        runInfo.setCurrentBook(id);
       });
 
       auto description = tgui::RichTextLabel::create();
-      description->setText(mainScene.getDescription(item.first.getIdentity()));
+      description->setText(book.getName() + ", " + std::to_string(book.getDurability()));
       description->getRenderer()->setTextColor(tgui::Color::White);
       description->getRenderer()->setBorderColor(tgui::Color::White);
       description->getRenderer()->setTextStyle(tgui::TextStyle::Italic);
@@ -61,6 +57,10 @@ class InventoryMenu : public Scene {
 
  public:
   void loadGraphics() override {
+    //context.gui.removeAllWidgets();
+    //BookLayoutUtils::createBase(context.gui);
+    //BookLayoutUtils::addRunInfo(context.gui, runInfo);
+
     // Create main panel
     mainPanel = tgui::Panel::create();
     mainPanel->setSize("100%", "100%");
@@ -69,37 +69,35 @@ class InventoryMenu : public Scene {
     auto middle = context.gui.get<tgui::Panel>("main_free_space");
     middle->add(mainPanel);
 
-    // Create inventory panel
-    inventoryPanel = tgui::ScrollablePanel::create();
-    inventoryPanel->setSize("80%", "80%");
-    inventoryPanel->setPosition("10%", "10%");
-    inventoryPanel->getRenderer()->setBackgroundColor(tgui::Color(30, 30, 30));
-    mainPanel->add(inventoryPanel);
+    // Create book panel
+    bookPanel = tgui::ScrollablePanel::create();
+    bookPanel->setSize("80%", "80%");
+    bookPanel->setPosition("10%", "10%");
+    bookPanel->getRenderer()->setBackgroundColor(tgui::Color(30, 30, 30));
+    mainPanel->add(bookPanel);
 
-    // Get back button
+    // Create back button
     backButton = context.gui.get<tgui::Button>("back");
     backButton->onPress.disconnectAll();
     backButton->setText("back");
     backButton->onPress([this] {
-      parent.hideInventory();
+      parent.hideBookMenu();
     });
 
-    reloadInventory();
+    reloadBooks();
   }
 
   void handleEvent(const std::optional<sf::Event> &_event) override {};
 
-  InventoryMenu(GameContext &context, RunInfo &runInfo, ItemAffected &mainScene, InRunManager &parent)
-      : Scene(context), runInfo(runInfo), mainScene(mainScene), parent(parent) {};
+  BookMenu(GameContext &context, RunInfo &runInfo, InRunManager &parent)
+      : Scene(context), runInfo(runInfo), parent(parent) {};
 
   void clear() override {
     if (mainPanel) {
       context.gui.remove(mainPanel);
       mainPanel.reset();
-      inventoryPanel.reset();
+      bookPanel.reset();
       backButton.reset();
     }
   }
-};
-
-
+}; 

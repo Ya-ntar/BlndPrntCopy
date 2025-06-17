@@ -50,11 +50,9 @@ class SmartTimer {
     timer = tgui::Timer::create(
         [this]() {
           totalTime += tickInterval;
-          std::cout << "Tik!: " << totalTime << " seconds\n";
           bus.add(TimerMsg{.timerType = name, .timeLeft = stopTime -
               totalTime, .is_finished= false});
           if (totalTime >= stopTime) {
-            std::cout << "Timer stopped\n";
             bus.add(TimerMsg{.timerType = name, .timeLeft = 0, .is_finished= true});
             timer->setEnabled(false);
           }

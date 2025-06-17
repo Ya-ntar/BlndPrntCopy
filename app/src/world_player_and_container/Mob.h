@@ -9,6 +9,7 @@
 #include <iostream>
 #include "nlohmann/json.hpp"
 #include "../utils/Utils.h"
+#include "../utils/ErrorHandler.h"
 
 
 using ItemID = std::string;
@@ -40,7 +41,12 @@ class Mob : public SmartSubscriber {
 
   void takeDamage(int amount) {
     currentHp = std::max(0, currentHp - amount);
-    getBus().add(mob::MobChangedMsg({.val = mob::State::HP_LESSENED, .target =uniqueId}));
+    if (!isAlive()){
+      getBus().add(mob::MobChangedMsg{.val = mob::State::DIED, .target = uniqueId});
+    } else {
+      getBus().add(mob::MobChangedMsg({.val = mob::State::HP_LESSENED, .target =uniqueId}));
+    }
+
   }
   void subscribeToEverything() {
     // it's okay if not subscribed to anything
@@ -51,7 +57,7 @@ class Mob : public SmartSubscriber {
 
   [[nodiscard]] bool isAlive() const { return currentHp > 0; }
 
-  [[nodiscard]] std::size_t getUniqueId() const { return uniqueId; }
+  [[nodiscard]] MobID getUniqueId() const { return uniqueId; }
 
 };
 
@@ -103,7 +109,7 @@ class MobType {
         itemReactions[event] = [value](Mob &mob) { mob.takeDamage(value); };
       }
     } catch (const json::exception &e) {
-      std::cerr << "Invalid reaction item: " << e.what() << std::endl;
+      throw error::ValidationError("item_reaction", e.what());
     }
   }
 

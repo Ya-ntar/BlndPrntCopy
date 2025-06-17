@@ -2,20 +2,19 @@
 #include "../InFightManager.h"
 
 void AtkScene::load() {
+
   menu.load();
   loadGraphics();
   logic.start();
 }
 
-AtkScene::AtkScene(InFightManager *parent, RunInfo &runInfo, Layout &base, std::string pathToAtk) :
-    Scene(base.getContext()),
-    parent(parent),
-    logic(base.getContext().queueBus, runInfo.getCurrentBook().getTextHolder(), runInfo.player.getTime()),
-    atkInput(logic),
-    menu(base, std::move(pathToAtk)) {
-
+AtkScene::AtkScene(InFightManager *parent, RunInfo &runInfo, GameContext &context, std::string pathToAtk)
+    : Scene(context),
+      parent(parent),
+      logic(context.queueBus, runInfo.getTextHolder(), runInfo.player.getTime()),
+      atkInput(logic),
+      menu(context, runInfo, std::move(pathToAtk)) {
   subscribeToAll();
-
 }
 
 void AtkScene::subscribeToAll() {
@@ -32,6 +31,8 @@ void AtkScene::subscribeToAll() {
 void AtkScene::loadGraphics() {
   auto const &gui = menu.getGui();
   if (auto backButton = gui.get<tgui::Button>("back")) {
+    backButton->onPress.disconnectAll();
+    backButton->setText("End Attack");
     backButton->onPress([this] {
       parent->changeScene(State::InFight::BattleMenu);
     });

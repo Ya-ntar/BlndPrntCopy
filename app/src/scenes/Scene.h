@@ -21,10 +21,11 @@ class Settable : public Loadable {
     this->mainField = std::move(newMain);
   }
 
-  void setParent(const std::shared_ptr<tgui::Group> &newParent) {
-    this->parent = newParent;
+  void setParent(std::shared_ptr<tgui::Group> newParent) {
+    this->parent.reset();
+    this->parent = std::move(newParent);
   }
-  void connect() { // единоличное владение
+  void connect() const { // единоличное владение?
     if (parent && mainField) {
       parent->removeAllWidgets();
       parent->add(mainField);
@@ -61,12 +62,11 @@ class Scene : public SmartSubscriber, public Loadable {
 template<typename CHILD_ID>
 class SceneManager : public Scene {
  protected:
-  std::vector<std::unique_ptr<Scene>> activeScenes;
   std::optional<CHILD_ID> chgToScene; //toDo: поменять на список из номеров 'на удаление'.
   bool closeLastScene = false;
 
   void closeAndChange(std::unique_ptr<Scene> newScene) {
-    close();
+    deleteLastScene();
     chgToScene.reset();
     if (newScene) {
       newScene->load();
@@ -74,9 +74,8 @@ class SceneManager : public Scene {
     }
   }
 
-  void close() {
+  void deleteLastScene() {
     if (!activeScenes.empty()) {
-      activeScenes[activeScenes.size() - 1]->clear();
       activeScenes.pop_back();
     }
   }
@@ -117,7 +116,7 @@ class SceneManager : public Scene {
     }
     while (closeLastScene) {
       closeLastScene = false;
-      close();
+      deleteLastScene();
       loadGraphics();
     }
 
@@ -143,5 +142,6 @@ class SceneManager : public Scene {
       layer->loadGraphics();
     }
   }
+  std::vector<std::unique_ptr<Scene>> activeScenes;
 };
 

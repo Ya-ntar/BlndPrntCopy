@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include "ErrorHandler.h"
 
 inline std::vector<std::string> splitLines(const std::string &text) {
   std::vector<std::string> lines;
@@ -65,7 +66,7 @@ inline std::string getStringFromFile(const std::string &path) {
     }
     file.close();
   } else {
-    std::cerr << "Couldn't find file " << path << std::endl;
+    throw error::FileError(path, "read");
   }
   return asciiArt;
 }

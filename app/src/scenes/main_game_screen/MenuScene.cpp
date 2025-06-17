@@ -4,6 +4,7 @@
 #include "MenuScene.h"
 #include "../MainManager.h"
 #include "../../utils/StringUtils.h"
+#include "../../utils/ErrorHandler.h"
 
 void MenuScene::load() {
   loadGraphics();
@@ -29,8 +30,7 @@ void MenuScene::loadGraphics() {
 
   }
   catch (const tgui::Exception &e) {
-    std::cerr << "Failed to load MainMenu: " << e.what() << std::endl;
-    throw;
+    throw error::ResourceLoadError("MainMenu", e.what());
   }
 }
 

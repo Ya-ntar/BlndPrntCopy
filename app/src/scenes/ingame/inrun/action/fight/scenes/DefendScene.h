@@ -22,8 +22,8 @@ class DefendScene : public Scene {
  public:
   explicit DefendScene(InFightManager *parent, Layout &base, RunInfo &runInfo, FightInfo &fightInfo,
                        std::string path = "forms/fighting_menu_widgets.txt") :
-      parent(parent), Scene(base.getContext()), base(base), runInfo(runInfo),
-      fightInfo(fightInfo), path(std::move(path)) {
+      Scene(base.getContext()), path(std::move(path)), base(base), runInfo(runInfo),
+      fightInfo(fightInfo), parent(parent) {
   };
 
   void loadGraphics() override;

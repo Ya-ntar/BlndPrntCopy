@@ -3,13 +3,13 @@
 //
 #include "DeathScene.h"
 #include "InGameManager.h"
+#include "../../utils/ErrorHandler.h"
 
 void DeathScene::loadGraphics() {
   tgui::Gui &gui = context.gui;
   try { gui.loadWidgetsFromFile(path); }
   catch (const tgui::Exception &e) {
-    std::cerr << "Failed to load HomeBaseScene " << e.what() << std::endl;
-    throw e;
+    throw error::ResourceLoadError("DeathScene", e.what());
   }
 
   if (auto return_btn = gui.get<tgui::Button>("return")) {

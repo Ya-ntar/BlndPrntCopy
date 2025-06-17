@@ -5,7 +5,7 @@
 
 std::unique_ptr<Scene> InFightManager::createScene(State::InFight scene) {
   switch (scene) {
-    case State::InFight::Atk: return std::make_unique<AtkScene>(this, runInfo, menuBase);
+    case State::InFight::Atk: return std::make_unique<AtkScene>(this, runInfo, context);
     case State::InFight::BattleMenu : return std::make_unique<BattleMenuScene>(this, menuBase);
     case State::InFight::Inactive: return nullptr;
     case State::InFight::Defend: return std::make_unique<DefendScene>(this, menuBase, runInfo, fightInfo);
@@ -42,6 +42,11 @@ void InFightManager::showInventory() {
 }
 
 void InFightManager::subscribeToAll() {
+  subscribeSmartly<mob::MobChangedMsg>(
+      [this](const mob::MobChangedMsg &msg) {
+       fightInfo.mobs;
+      }
+  );
   /*subscribeSmartly<mob::MobAttacking>(
           [this](const mob::MobAttacking &msg) {
               std::this_thread::sleep_for(std::chrono::milliseconds{800});

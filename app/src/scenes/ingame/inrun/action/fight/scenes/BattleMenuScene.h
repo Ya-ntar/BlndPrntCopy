@@ -7,19 +7,19 @@
 #include <utility>
 #include <iostream>
 
+
 #include "../../../../../SceneType.h"
-#include "../../../../../Scene.h"
 #include "../../../base/Layout.h"
+#include "../../../../../../scenes/Scene.h"
 
 class InFightManager;
 class BattleMenuScene : public Scene {
-  std::string path;
-  Layout &base;
+  Layout &menuBase;
   InFightManager *parent;
  public:
-  explicit BattleMenuScene(InFightManager *parent, Layout &base,
-                           std::string path = "forms/fighting_menu_widgets.txt") :
-      parent(parent), Scene(base.getContext()), base(base), path(std::move(path)) {
+  explicit BattleMenuScene(InFightManager *parent, Layout &menuBase) :
+      Scene(menuBase.getContext()),
+      menuBase(menuBase), parent(parent) {
   };
 
   void loadGraphics() override;

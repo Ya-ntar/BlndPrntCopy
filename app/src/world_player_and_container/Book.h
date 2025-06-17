@@ -12,6 +12,7 @@
 #include <atomic>
 #include <map>
 #include <string>
+#include <memory>
 
 using BookID = std::size_t;
 
@@ -23,25 +24,28 @@ class Book {
   int32_t damage_per_hit{};
   int32_t extra_time{};
   BoundedValue durability;
+  std::unique_ptr<TextSource> textSource_;  // Владение здесь
   TextHolder textHolder;
   bool infiniteDurability = false;
 
  public:
   Book(std::string name,
-       size_t lvl,
+       int lvl,
        int32_t damage_per_hit,
        int32_t extra_time,
        BoundedValue durability,
-       TextSource &textSource,
+       std::unique_ptr<TextSource> textSource,
        size_t bufferSize,
        bool cleanAutomatically,
        bool infiniteDurability = false)
-      :
-      name(std::move(name)), lvl(lvl),
-      damage_per_hit(damage_per_hit), extra_time(extra_time),
-      durability(durability),
-      textHolder(bufferSize, "", 0, textSource, cleanAutomatically),
-      infiniteDurability(infiniteDurability) {}
+      : name(std::move(name)),
+        lvl(lvl),
+        damage_per_hit(damage_per_hit),
+        extra_time(extra_time),
+        durability(durability),
+        textSource_(std::move(textSource)),  // Сохраняем владение
+        textHolder(bufferSize, "", 0, *textSource_, cleanAutomatically),
+        infiniteDurability(infiniteDurability) {}
 
   [[nodiscard]] BookID getId() const { return id; }
   TextHolder &getTextHolder() { return textHolder; }

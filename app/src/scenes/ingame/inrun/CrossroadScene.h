@@ -1,6 +1,7 @@
 #pragma once
 
 #include "base/SceneInstructionSelectable.h"
+// #include "base/InventoryButtonScene.h" // больше не нужно
 
 class InRunManager;
 
@@ -15,8 +16,7 @@ class CrossroadScene : public Scene, public ItemAffected {
  public:
   CrossroadScene(RunInfo &runInfo, Layout &menuBase, InRunManager *parent, SceneGenerator &generator) :
       Scene(menuBase.getContext()),
-      runInfo(runInfo), menuBase(menuBase),
-      parent(parent), generator(generator) {};
+      runInfo(runInfo), menuBase(menuBase), parent(parent), generator(generator) {};
 
   void clear() override {
     menuBase.clear();
@@ -36,7 +36,6 @@ class CrossroadScene : public Scene, public ItemAffected {
     menuBase.setMiddle(std::make_unique<SceneInstructionSelectable>(choices, selected));
     menuBase.load();
     makeMenuButtons();
-
   }
 
   void makeMenuButtons();

@@ -32,9 +32,15 @@ class InRunManager : public SceneManager<State::InRun> {
 
   void showInventory(ItemAffected &mainScene);
 
-  void hideInventory() {
+  void showChangeArmour(ItemAffected &mainScene);
+  void showBookMenu();
+  void hideChangeArmour(){//toDo: добавить эксепшн
     deleteScene();
   }
+  void hideInventory() { //toDo: добавить эксепшн
+    deleteScene();
+  }
+  void hideBookMenu() { deleteScene(); }
 
   void load() override {
     subscribeAll();

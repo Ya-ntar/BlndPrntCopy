@@ -39,7 +39,8 @@ struct PlayerDeath : pub::Message {
 namespace mob {
 enum class State {
   HP_LESSENED,
-  HP_GREW
+  HP_GREW,
+  DIED
 };
 struct MobAttacking : pub::Message {
   const int32_t damage;
@@ -84,7 +85,6 @@ struct DefenseChangeStateMsg : pub::Message {
 };
 struct AttackLogicStateChange : pub::Message {
   textProcessing::CharCheckState state;
-  TextHolder currentTextHolder;
   int32_t hits{};
 };
 
