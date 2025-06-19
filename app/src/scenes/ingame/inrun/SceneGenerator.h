@@ -16,7 +16,7 @@ class SceneGenerator {
  public:
   [[nodiscard]] std::vector<SceneInstruction> generateInstructions() const {
     std::vector<SceneInstruction> result;
-    const auto &mobTypes = context.mobDatabase.getMobTypes();
+    const auto &mobTypes = context.mob_database.getMobTypes();
     std::vector<ItemID> id_vec;
     id_vec.reserve(mobTypes.size());
     for (const auto &type : mobTypes) {
@@ -29,8 +29,8 @@ class SceneGenerator {
 
     std::random_device random_device;
     std::mt19937 gen{random_device()};
-    std::uniform_int_distribution<> mobCountDist(1, 4);
-    std::uniform_int_distribution<> mobIndexDist(0, static_cast<int>(mobTypes.size()) - 1);
+    std::uniform_int_distribution mobCountDist(1, 4);
+    std::uniform_int_distribution mobIndexDist(0, static_cast<int>(mobTypes.size()) - 1);
 
     for (int i = 0; i < 3; ++i) {
       int mobCount = mobCountDist(gen);
@@ -48,7 +48,7 @@ class SceneGenerator {
     if (instruction.type == SceneInstruction::Type::FIGHT) {
       FightInfo fightInfo;
       for (const auto &mobName : instruction.mobs) {
-        fightInfo.addMob( context.mobDatabase.createMob(context.queueBus, mobName));
+        fightInfo.addMob(context.mob_database.createMob(context.queueBus, mobName));
       }
 
       return std::make_unique<InFightManager>(parent, context, runInfo, fightInfo, menuBase);

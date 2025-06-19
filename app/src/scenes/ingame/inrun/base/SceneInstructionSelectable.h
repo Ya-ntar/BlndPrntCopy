@@ -21,8 +21,8 @@ class SceneInstructionView : public SelectableTemplate {
   SceneInstructionSelectable *parent = nullptr;
  public:
   SceneInstructionView(
-                       SceneInstruction &instruction,
-                       SceneInstructionSelectable *parent)
+      SceneInstruction &instruction,
+      SceneInstructionSelectable *parent)
       : instruction(instruction), parent(parent) {
     loadTemplateWidgets("forms/standard/fighting/MobBase.txt", "Tmpl" +
         std::to_string(instruction.uniqueId));

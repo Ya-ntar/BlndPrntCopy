@@ -53,7 +53,7 @@ class Player : public SmartSubscriber {
   }
 
  public:
-  Player(QueuedMessageBus &bus, PlayerContext const& startingPlayerContext) :
+  Player(QueuedMessageBus &bus, PlayerContext const &startingPlayerContext) :
       SmartSubscriber(bus), bus(bus), context(startingPlayerContext) {
     subscribeToEverything();
   }

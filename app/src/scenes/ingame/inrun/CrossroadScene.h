@@ -33,8 +33,12 @@ class CrossroadScene : public Scene, public ItemAffected {
     loadGraphics();
   }
   void loadGraphics() override {
-    menuBase.setMiddle(std::make_unique<SceneInstructionSelectable>(choices, selected));
+
+    menuBase.setMiddle(std::make_shared<SceneInstructionSelectable>(choices, selected));
     menuBase.load();
+    if (auto info = context.gui.get<tgui::TextArea>("menu_info")) {
+      info->setText("Crossroad");
+    }
     makeMenuButtons();
   }
 

@@ -3,6 +3,7 @@
 #include <TGUI/Widgets/Button.hpp>
 #include <TGUI/Container.hpp>
 #include <type_traits>
+#include "../../../../utils/WidgetConfigurator.h"
 
 struct InventoryButtonUtil {
   template<typename ParentType, typename AffectedType = void>
@@ -25,9 +26,7 @@ struct InventoryButtonUtil {
   static std::shared_ptr<tgui::Button> createStyledButton(const std::string &text) {
     auto button = tgui::Button::create(text);
     button->setSize("150", "30");
-    button->getRenderer()->setBorderColor(tgui::Color::White);
-    button->getRenderer()->setBackgroundColor(tgui::Color::Black);
-    button->getRenderer()->setTextColor(tgui::Color::White);
+    WidgetConfigurator::configureButton(button);
     return button;
   }
 };

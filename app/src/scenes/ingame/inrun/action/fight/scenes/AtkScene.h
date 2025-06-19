@@ -11,6 +11,7 @@
 #include "../tools/HitsTime.h"
 #include "../../../base/Layout.h"
 #include "../../../../../../utils/SmartTimer.h"
+#include "../../../../../../utils/WidgetConfigurator.h"
 
 static constexpr std::string ATK_TIMER_NAME = "AtkTimer";
 
@@ -89,7 +90,7 @@ class AtkInput : public InputProcessor {
 
 class AttackMenu {
   std::string path;
-  GameContext& context;
+  GameContext &context;
   RunInfo &run_info_;
   std::shared_ptr<tgui::Panel> mainPanel;
   std::shared_ptr<tgui::Group> runningLineGroup;
@@ -100,99 +101,34 @@ class AttackMenu {
   std::optional<HitsTime> hitsTime;
   textProcessing::RunningLineDisplay runningLine;
 
-  static void configureRichTextLabel(std::shared_ptr<tgui::RichTextLabel> label, 
-                                   const tgui::Color& backgroundColor = tgui::Color::Black,
-                                   const tgui::Color& borderColor = tgui::Color::White,
-                                   const tgui::Color& textColor = tgui::Color::White,
-                                   tgui::VerticalAlignment verticalAlign = tgui::VerticalAlignment::Center,
-                                   tgui::HorizontalAlignment horizontalAlign = tgui::HorizontalAlignment::Left,
-                                   unsigned int textSize = 0) {
-    label->setSize("100%", "100%");
-    if (textSize > 0) {
-      label->setTextSize(textSize);
-    }
-    label->getRenderer()->setBackgroundColor(backgroundColor);
-    label->getRenderer()->setBorderColor(borderColor);
-    label->getRenderer()->setTextColor(textColor);
-    label->setVerticalAlignment(verticalAlign);
-    label->setHorizontalAlignment(horizontalAlign);
-  }
-
-  void createWidgets() {
-    // Create main panel
-    mainPanel = tgui::Panel::create();
-    mainPanel->setSize("100%", "100%");
-    mainPanel->getRenderer()->setBackgroundColor(tgui::Color::Black);
-
-    auto middle = context.gui.get<tgui::Panel>("main_free_space");
-    middle->add(mainPanel);
-
-
-    runningLineGroup = tgui::Group::create();
-    runningLineGroup->setPosition("5%", "0%");
-    runningLineGroup->setSize("90%", "30%");
-    mainPanel->add(runningLineGroup);
-
-    textDisplay = tgui::RichTextLabel::create();
-    configureRichTextLabel(textDisplay, tgui::Color::Black, tgui::Color::White, tgui::Color::White, 
-                          tgui::VerticalAlignment::Center, tgui::HorizontalAlignment::Left);
-    runningLineGroup->add(textDisplay);
-
-
-    timeHitsGroup = tgui::Group::create();
-    timeHitsGroup->setPosition("0%", "0%");
-    timeHitsGroup->setSize("100%", "100%");
-
-    auto top = context.gui.get<tgui::Panel>("top_free_space");
-    top->add(timeHitsGroup);
-
-
-    auto statsLayout = tgui::HorizontalLayout::create();
-    statsLayout->setSize("100%", "100%");
-    timeHitsGroup->add(statsLayout);
-
-    // Create hit area
-    hitArea = tgui::RichTextLabel::create();
-    configureRichTextLabel(hitArea, tgui::Color::Black, tgui::Color::Black, tgui::Color::White, 
-                          tgui::VerticalAlignment::Center, tgui::HorizontalAlignment::Center, 17);
-    hitArea->setText("<color=white>Hits: 0</color>");
-    statsLayout->add(hitArea);
-
-    
-    timeArea = tgui::RichTextLabel::create();
-    configureRichTextLabel(timeArea, tgui::Color::Black, tgui::Color::Black, tgui::Color::White, 
-                          tgui::VerticalAlignment::Center, tgui::HorizontalAlignment::Center, 17);
-    timeArea->setText("<color=white>Time: </color>");
-    statsLayout->add(timeArea);
-  }
-
-  void updateText(const tgui::String& currentChar, const tgui::String& otherText) {
+  void updateText(const tgui::String &currentChar, const tgui::String &otherText) {
     if (currentChar.empty()) {
       textDisplay->setText("");
       return;
     }
-    // Highlight first character in red, rest in white
     textDisplay->setText("<color=red>" + currentChar + "</color><color=white>" + otherText + "</color>");
   }
 
  public:
   explicit AttackMenu(GameContext &context, RunInfo &run_info_, std::string path) :
-      path(std::move(path)), 
-      context(context), 
+      path(std::move(path)),
+      context(context),
       run_info_(run_info_),
       runningLine(nullptr, nullptr, run_info_, context.queueBus) {
-    createWidgets();
-    runningLine.set(textDisplay);
   }
 
   void load() {
+    createWidgets();
     hitsTime.emplace(ATK_TIMER_NAME, hitArea, timeArea, context.queueBus);
     runningLine.update();
   }
 
+  void clearVisual() {
+    context.gui.remove(mainPanel);
+  }
   void clear() {
     hitsTime.reset();
-    
+
     if (mainPanel) {
       context.gui.remove(mainPanel);
       mainPanel.reset();
@@ -206,6 +142,52 @@ class AttackMenu {
 
   tgui::Gui &getGui() {
     return context.gui;
+  }
+  void createWidgets() {
+    mainPanel = tgui::Panel::create();
+    WidgetConfigurator::configurePanel(mainPanel);
+
+    auto middle = context.gui.get<tgui::Panel>("main_free_space");
+    middle->add(mainPanel);
+
+    runningLineGroup = tgui::Group::create();
+    runningLineGroup->setPosition("5%", "0%");
+    runningLineGroup->setSize("90%", "30%");
+    mainPanel->add(runningLineGroup);
+
+    textDisplay = tgui::RichTextLabel::create();
+    WidgetConfigurator::configureRichTextLabel(textDisplay, tgui::Color::Black, tgui::Color::White,
+                                               tgui::Color::White, tgui::VerticalAlignment::Center,
+                                               tgui::HorizontalAlignment::Left);
+    runningLineGroup->add(textDisplay);
+
+    timeHitsGroup = tgui::Group::create();
+    timeHitsGroup->setPosition("0%", "0%");
+    timeHitsGroup->setSize("100%", "100%");
+
+    auto top = context.gui.get<tgui::Panel>("top_free_space");
+    top->add(timeHitsGroup);
+
+    auto statsLayout = tgui::HorizontalLayout::create();
+    statsLayout->setSize("100%", "100%");
+    timeHitsGroup->add(statsLayout);
+
+    // Create hit area
+    hitArea = tgui::RichTextLabel::create();
+    WidgetConfigurator::configureRichTextLabel(hitArea, tgui::Color::Black, tgui::Color::Black,
+                                               tgui::Color::White, tgui::VerticalAlignment::Center,
+                                               tgui::HorizontalAlignment::Center, 17);
+    hitArea->setText("<color=white>Hits: 0</color>");
+    statsLayout->add(hitArea);
+
+    timeArea = tgui::RichTextLabel::create();
+    WidgetConfigurator::configureRichTextLabel(timeArea, tgui::Color::Black, tgui::Color::Black,
+                                               tgui::Color::White, tgui::VerticalAlignment::Center,
+                                               tgui::HorizontalAlignment::Center, 17);
+    timeArea->setText("<color=white>Time: </color>");
+    statsLayout->add(timeArea);
+
+    runningLine.set(textDisplay);
   }
 };
 

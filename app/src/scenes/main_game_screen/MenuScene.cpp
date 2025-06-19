@@ -21,7 +21,7 @@ void MenuScene::loadGraphics() {
       });
     }
 
-    std::string asciiArt = getStringFromFile(std::string(Assets::ASCII_BLIND));
+    std::string asciiArt = getStringFromFile(std::string(Assets::kAsciiBlind));
 
     auto asciiLabel = gui.get<tgui::RichTextLabel>("ascii");
     asciiLabel->setText(asciiArt);

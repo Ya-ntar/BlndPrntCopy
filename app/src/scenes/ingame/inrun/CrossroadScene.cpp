@@ -5,7 +5,6 @@
 #include "../InGameManager.h"
 #include "base/InventoryButtonUtil.h"
 
-
 void CrossroadScene::makeMenuButtons() {
   if (auto backButton = menuBase.getGui().get<tgui::Button>("back")) {
     backButton->setText("Run away");
@@ -30,8 +29,7 @@ void CrossroadScene::makeMenuButtons() {
   BookButtonUtil::addBookButton(layout, parent);
   {
     menuBase.getMainFreeSpace()->add(layout);
-    layout->setPosition({"1%", "0%"});
-    layout->setSize({"50%", "50%"});
+    WidgetConfigurator::configureMenuLayout(layout);
   }
 }
 

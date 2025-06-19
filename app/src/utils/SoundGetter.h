@@ -25,13 +25,13 @@ class SoundGetter {
 
  public:
   SoundGetter() {
-    loadSound(Assets::SOUND_CLICK_ALT);
+    loadSound(Assets::kSoundClickAlt);
     update_sounds();
   }
 
   void play() {
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0,  sounds.size() - 1);
+    std::uniform_int_distribution<> dis(0, sounds.size() - 1);
     sounds[dis(gen)].play();
   }
 };

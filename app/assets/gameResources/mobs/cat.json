@@ -6,6 +6,9 @@
   "beating_pattern": "...?",
   "attack_duration": 15.0,
   "attack_power": 3,
+  "coins": 5,
+  "items": ["apple", "sword"],
+  "books": ["test_book1"],
   "item_reactions": [
     {
       "event": "ink",

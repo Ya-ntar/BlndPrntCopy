@@ -15,14 +15,14 @@
 namespace mob {
 class MobSelectable;
 
-class MobView : public SelectableFront<Mob, MobSelectable>, SmartSubscriber {
+class MobView : public SelectableFront<Mob, MobSelectable>, public SmartSubscriber {
   Mob &mob;
   std::string HPColoring;
   std::string DMGColoring;
 
   void init();
-  void animateAtk() {
-    pic->showWithEffect(tgui::ShowEffectType::Scale, 5000);
+  void animateAtk() const {
+    pic->showWithEffect(tgui::ShowEffectType::Scale, 500);
   };
  public:
   MobView(std::shared_ptr<tgui::HorizontalLayout> mobPlace,
@@ -51,6 +51,8 @@ class MobSelectable : public Settable {
     mobPlace = tgui::HorizontalLayout::create();
     mobPlace->setSize({"100%", "50%"});
     mobPlace->setPosition("0%", "10%");
+    fronts.clear(); //?
+
     for (auto &m : fightInfo.mobs) {
       MobID mobId = m.second.getUniqueId();
       fronts.try_emplace(mobId, mobPlace, m.second, *this);
@@ -58,9 +60,10 @@ class MobSelectable : public Settable {
     }
     setMain(mobPlace);
     connect();
+    updateAllFronts();
   }
 
-  std::set<Mob *> &getSelector() { return fightInfo.currentlyUnderAttack; }
+  std::set<Mob *> &getSelector() { return fightInfo.currently_under_attack; }
 
   void updateAllFronts() {
     for (auto &front : fronts) {
@@ -74,7 +77,7 @@ class MobSelectable : public Settable {
 };
 
 inline void MobView::init() {
-  loadTemplateWidgets(Assets::FORM_MOB_BASE, std::format("mob{}", mob.getUniqueId()));
+  loadTemplateWidgets(Assets::kFormMobBase, std::format("mob{}", mob.getUniqueId()));
   update_all();
   pic->onClick([this] {
     setSelected(true);

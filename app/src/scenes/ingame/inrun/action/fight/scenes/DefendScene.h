@@ -15,14 +15,13 @@ class InFightManager;
 
 class DefendScene : public Scene {
   std::string path;
-  Layout &base;
   RunInfo &runInfo;
   FightInfo &fightInfo;
   InFightManager *parent;
  public:
-  explicit DefendScene(InFightManager *parent, Layout &base, RunInfo &runInfo, FightInfo &fightInfo,
+  explicit DefendScene(InFightManager *parent, GameContext &context, RunInfo &runInfo, FightInfo &fightInfo,
                        std::string path = "forms/fighting_menu_widgets.txt") :
-      Scene(base.getContext()), path(std::move(path)), base(base), runInfo(runInfo),
+      Scene(context), path(std::move(path)), runInfo(runInfo),
       fightInfo(fightInfo), parent(parent) {
   };
 

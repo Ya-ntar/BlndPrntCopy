@@ -1,0 +1,17 @@
+{
+  "scene_type": "battle",
+  "item_reactions": [
+    {
+      "item": "InkBottle",
+      "action": "heal_player",
+      "value": 3,
+      "description": "Лечит три здоровья."
+    },
+    {
+      "item": "Eraser",
+      "action": "damage_enemy",
+      "value": 5,
+      "description": "Наносит 5 урона врагу."
+    }
+  ]
+} 

@@ -540,7 +540,7 @@ Panel.main_panel {
             }
         }
 
-        TextArea.TextArea7 {
+        TextArea.coins_info_value {
             DefaultText = "Coins:";
             HorizontalScrollbarPolicy = Never;
             MaximumCharacters = 0;
@@ -583,7 +583,7 @@ Panel.main_panel {
             }
         }
 
-        TextArea.TextArea6 {
+        TextArea.coins_info_title {
             DefaultText = "Coins:";
             HorizontalScrollbarPolicy = Never;
             MaximumCharacters = 0;
@@ -626,7 +626,7 @@ Panel.main_panel {
             }
         }
 
-        TextArea.TextArea5 {
+        TextArea.armour_info_value {
             DefaultText = "Текст в руках:";
             HorizontalScrollbarPolicy = Never;
             IgnoreMouseEvents = true;

@@ -80,8 +80,7 @@ class RunningLineDisplay : public textProcessDisplay, public SmartSubscriber {
 
     mainString->setTextSize(24);
     mainString->setText("<color=white>" + runInfo.getActiveChar()
-    + "</color><color=#808080>" + runInfo.getMainString() + "</color>");
-
+                            + "</color><color=#808080>" + runInfo.getMainString() + "</color>");
 
   }
 

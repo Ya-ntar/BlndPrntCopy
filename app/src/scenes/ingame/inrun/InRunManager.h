@@ -13,15 +13,15 @@ struct RunResult {
     BossDefeated,
     RanAway
   } reason;
-
+  int money;
 };
 
 class InRunManager : public SceneManager<State::InRun> {
  private:
   SceneInstruction nextScene;
   InGameManager *parent;
-  RunInfo info;
-  Layout menuBase;
+  RunInfo run_info_;
+  Layout layout;
 
   SceneGenerator gen;
 
@@ -34,7 +34,7 @@ class InRunManager : public SceneManager<State::InRun> {
 
   void showChangeArmour(ItemAffected &mainScene);
   void showBookMenu();
-  void hideChangeArmour(){//toDo: добавить эксепшн
+  void hideChangeArmour() {//toDo: добавить эксепшн
     deleteScene();
   }
   void hideInventory() { //toDo: добавить эксепшн
@@ -44,17 +44,20 @@ class InRunManager : public SceneManager<State::InRun> {
 
   void load() override {
     subscribeAll();
-    changeScene(State::InRun::Crossroad);
+    changeScene(State::InRun::CROSSROAD);
   };
 
   void ranAwayFromAFight();
 
   void playerDeath(const player::PlayerDeath &death);
-
+  void prepare() override {
+    layout.load();
+  }
   std::unique_ptr<Scene> createScene(State::InRun scene) override;
   void chooseScene(const SceneInstruction &scene) {
     nextScene = scene;
-    changeScene(State::InRun::Scene);
+    changeScene(State::InRun::SCENE);
   }
   void ranAwayHome();
+  void winAFight(const FightInfo &info_1);
 };

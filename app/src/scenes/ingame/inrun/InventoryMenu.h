@@ -22,37 +22,34 @@ class InventoryMenu : public Scene {
     vLayout->removeAllWidgets();
 
     const auto &inventory(runInfo.getManager().getItemMap());
-    for (const auto &item : inventory) {
+    for (const auto &[item, count] : inventory) {
       auto hLayout = tgui::GrowHorizontalLayout::create();
 
-      string btnName = item.first.getName();
-      if (item.second > 1) {
-        btnName += " (" + std::to_string(item.second) + ")";
+      string btnName = item.getName();
+      if (count > 1) {
+        btnName += " (" + std::to_string(count) + ")";
       }
 
       auto button = tgui::Button::create(btnName);
       button->setSize("150", "30");
-      button->getRenderer()->setBorderColor(tgui::Color::White);
-      button->getRenderer()->setBackgroundColor(tgui::Color::Black);
-      button->getRenderer()->setTextColor(tgui::Color::White);
-      button->onPress([&, item] {
-        runInfo.getManager().useItem(mainScene, item.first);
+      WidgetConfigurator::configureButton(button);
+      button->onPress([this, item] {
+        runInfo.getManager().useItem(mainScene, item);
         reloadInventory();
       });
 
       auto description = tgui::RichTextLabel::create();
-      description->setText(mainScene.getDescription(item.first.getIdentity()));
-      description->getRenderer()->setTextColor(tgui::Color::White);
-      description->getRenderer()->setBorderColor(tgui::Color::White);
-      description->getRenderer()->setTextStyle(tgui::TextStyle::Italic);
-      description->setVerticalAlignment(tgui::VerticalAlignment::Center);
-      description->setHorizontalAlignment(tgui::HorizontalAlignment::Center);
+      description->setText(mainScene.getDescription(item.getIdentity()));
+      WidgetConfigurator::configureRichTextLabel
+          (description, tgui::Color::Black, tgui::Color::White,
+           tgui::Color::White, tgui::VerticalAlignment::Center,
+           tgui::HorizontalAlignment::Center, 13, tgui::TextStyle::Regular);
 
       auto line = tgui::SeparatorLine::create(button->getSizeLayout());
-
-      hLayout->setSize(button->getSizeLayout().x + description->getSizeLayout().x, button->getSizeLayout().y);
+      description->setSize("300", "30");
+      hLayout->setSize((button->getSize().x + description->getSize().x) * 2, button->getSize().y);
       hLayout->add(button);
-      hLayout->add(line);
+
       hLayout->add(description);
       vLayout->add(hLayout);
     }
@@ -61,25 +58,24 @@ class InventoryMenu : public Scene {
 
  public:
   void loadGraphics() override {
-    // Create main panel
+
+    if (auto info = context.gui.get<tgui::TextArea>("menu_info")) {
+      info->setText("Inventory");
+    }
+
     mainPanel = tgui::Panel::create();
-    mainPanel->setSize("100%", "100%");
-    mainPanel->getRenderer()->setBackgroundColor(tgui::Color::Black);
+    WidgetConfigurator::configurePanel(mainPanel);
 
     auto middle = context.gui.get<tgui::Panel>("main_free_space");
+    middle->getRenderer()->setBackgroundColor(tgui::Color::Green);
     middle->add(mainPanel);
 
-    // Create inventory panel
     inventoryPanel = tgui::ScrollablePanel::create();
-    inventoryPanel->setSize("80%", "80%");
-    inventoryPanel->setPosition("10%", "10%");
-    inventoryPanel->getRenderer()->setBackgroundColor(tgui::Color(30, 30, 30));
+    WidgetConfigurator::configureScrollablePanel(inventoryPanel);
     mainPanel->add(inventoryPanel);
 
-    // Get back button
     backButton = context.gui.get<tgui::Button>("back");
-    backButton->onPress.disconnectAll();
-    backButton->setText("back");
+    WidgetConfigurator::configureBackButton(backButton);
     backButton->onPress([this] {
       parent.hideInventory();
     });

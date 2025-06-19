@@ -26,22 +26,22 @@ class Layout {
   std::shared_ptr<tgui::Group> middle;
   std::shared_ptr<tgui::Group> down;
   InRunPanel player_menu_panel_;
-  std::unique_ptr<Settable> middleView;
+  std::shared_ptr<Settable> middleView;
  public:
-  Layout(GameContext &context, RunInfo &runInfo, std::string path = std::string(Assets::FORM_BASE))
+  Layout(GameContext &context, RunInfo &runInfo, std::string path = std::string(Assets::kFormBase))
       : context(context), player_menu_panel_(runInfo, std::move(path)), runInfo(runInfo) {
     init();
   }
 
   tgui::Gui &getGui() { return context.gui; }
 
-  std::shared_ptr<tgui::Panel> getMainFreeSpace() const { return player_menu_panel_.getMainFreeSpace(); }
+  [[nodiscard]] std::shared_ptr<tgui::Panel> getMainFreeSpace() const { return player_menu_panel_.getMainFreeSpace(); }
 
-  std::shared_ptr<tgui::Panel> getTopFreeSpace() const { return player_menu_panel_.getTopFreeSpace(); }
+  [[nodiscard]] std::shared_ptr<tgui::Panel> getTopFreeSpace() const { return player_menu_panel_.getTopFreeSpace(); }
 
   GameContext &getContext() { return context; }
 
-  void setMiddle(std::unique_ptr<Settable> view) {
+  void setMiddle(std::shared_ptr<Settable> view) {
     middleView = std::move(view);
     middleView->setParent(middle);
   }
@@ -65,6 +65,11 @@ class Layout {
     up = tgui::Group::create();
     middle = tgui::Group::create();
     down = tgui::Group::create();
+
+    up->setWidgetName("up");
+    middle->setWidgetName("middle");
+    down->setWidgetName("down");
+
     gui.add(up);
     gui.add(middle);
     gui.add(down);
@@ -83,6 +88,7 @@ class Layout {
     down.reset();
     middle.reset();
     player_menu_panel_.clear();
+    middleView.reset();
   }
 
   void updatePlayerPanel() { player_menu_panel_.updatePlayerPanel(); }

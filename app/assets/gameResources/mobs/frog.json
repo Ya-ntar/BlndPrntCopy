@@ -6,6 +6,9 @@
   "beating_pattern": "........../",
   "attack_duration": 20.0,
   "attack_power": 2,
+  "coins": 3,
+  "items": [],
+  "books": [],
   "item_reactions": [
     {
       "event": "eraser",

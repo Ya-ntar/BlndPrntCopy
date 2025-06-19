@@ -8,6 +8,7 @@
 #include <utility>
 #include "world_player_and_container/Book.h"
 #include <functional>
+#include <experimental/filesystem>
 
 static const int DEFAULT_TIME = 1000;
 static const int DEFAULT_VIS_LETTERS = 10;
@@ -29,46 +30,64 @@ struct BookResource {
 struct GameContext {
   tgui::Gui gui;
   QueuedMessageBus &queueBus = QueuedMessageBus::getInstance();
-  MobDatabase mobDatabase;
+  MobDatabase mob_database;
   sf::RenderWindow &window;
-  player::PlayerContext playerContext{DEFAULT_TIME, DEFAULT_VIS_LETTERS,
-                                      {DEFAULT_HP, DEFAULT_HP},
-                                      {DEFAULT_ERRORS, DEFAULT_ERRORS}};
-  std::map<int, BookResource> bookResources;
+  player::PlayerContext player_context{DEFAULT_TIME, DEFAULT_VIS_LETTERS,
+                                       {DEFAULT_HP, DEFAULT_HP},
+                                       {DEFAULT_ERRORS, DEFAULT_ERRORS}};
+  std::map<int, BookResource> book_resources;
 
   explicit GameContext(sf::RenderWindow &window) :
       gui(window),
       window(window) {}
 
   void loadMobs() {
-    mobDatabase.loadFromJson(Assets::MOB_CAT_JSON);
-    mobDatabase.loadFromJson(Assets::MOB_FROG_JSON);
+    namespace fs = std::experimental::filesystem;
+    std::string mob_dir = "assets/gameResources/mobs/";
+    for (const auto &entry : fs::directory_iterator(mob_dir)) {
+      if (entry.path().extension() == ".json") {
+        mob_database.loadFromJson(entry.path().string());
+      }
+    }
   }
 
   void addBookResource(int id, const BookResource &resource) {
-    bookResources.try_emplace(id, resource);
+    book_resources.try_emplace(id, resource);
   }
   const BookResource &getBookResource(int id) const {
-    return bookResources.at(id);
+    return book_resources.at(id);
   }
 };
 
 struct RunInfo {
  private:
-  FileTextSource fs{std::string(Assets::TEXT_TEST_RU), DEFAULT_LENGTH};
-  int coins = 0;
+  FileTextSource fs{std::string(Assets::kTextTestRu), DEFAULT_LENGTH};
+  size_t coins = 0;
   int lvl = 0;
-  ItemManager itemManager;
+  string log;
+  ItemManager item_manager;
   std::map<size_t, Book> books;
  public:
-  std::reference_wrapper<Book> currentBook;
+  std::reference_wrapper<Book> current_book;
   player::Player player;
 
+  void levelUp() {
+    lvl++;
+  }
+  void takeCoins(size_t hm) {
+    coins -= hm;
+  }
+  void addCoins(size_t hm) {
+    coins += hm;
+  }
+  void setLog(string new_log) {
+    log = std::move(new_log);
+  }
   explicit RunInfo(GameContext &gameContext)
-      : currentBook(createBaseBook()),
-        player(gameContext.queueBus, gameContext.playerContext) {
-    itemManager.addItem({"InkBottle", "Ink Bottle"});
-    itemManager.addItem({"Eraser", "Eraser"});
+      : current_book(createBaseBook()),
+        player(gameContext.queueBus, gameContext.player_context) {
+    item_manager.addItem({"InkBottle", "Ink Bottle"});
+    item_manager.addItem({"Eraser", "Eraser"});
 
     // Добавляем тестовые ресурсы книг
     gameContext.addBookResource(1, {"Test Book 1", "assets/texts/test_book1.txt",
@@ -112,15 +131,15 @@ struct RunInfo {
   const std::map<size_t, Book> &getBooks() const { return books; }
   Book &getBookById(int id) { return books.at(id); }
 
-  const ItemManager &getManager() const { return itemManager; }
-  ItemManager &getManager() { return itemManager; }
-  Book &getCurrentBook() const { return currentBook.get(); }
+  const ItemManager &getManager() const { return item_manager; }
+  ItemManager &getManager() { return item_manager; }
+  Book &getCurrentBook() const { return current_book.get(); }
   int getCurrentCoins() const { return coins; }
   int getCurrentLvl() const { return lvl; }
   void setCurrentBook(std::size_t id) {
     auto it = books.find(id);
     if (it != books.end()) {
-      currentBook = std::ref(it->second);
+      current_book = std::ref(it->second);
     } else {
       throw std::invalid_argument("Book with given ID does not exist");
     }
@@ -140,47 +159,49 @@ struct RunInfo {
     return txt.substr(1);
   }
   size_t getHowManyVisibleLetters() const { return player.getHowManyVisibleLetters(); }
+  string getLog() {
+    return log;
+  }
 };
 
 struct FightInfo {
   std::map<MobID, Mob> mobs;
-  std::set<Mob *> currentlyUnderAttack;
+  std::set<Mob *> currently_under_attack;
+  int totalCoins = 0;
 
   void addMob(Mob &&mob) { //!!! Eats
     auto id = mob.getUniqueId();
+    totalCoins += mob.getType().getCoins();
     mobs.try_emplace(mob.getUniqueId(), std::move(mob));
-    if (currentlyUnderAttack.empty()) {
-      currentlyUnderAttack.emplace(&mobs.at(id));
+    if (currently_under_attack.empty()) {
+      currently_under_attack.emplace(&mobs.at(id));
     }
 
   }
 
   void removeMob(MobID mobId) {
-    auto mobIt = mobs.find(mobId);
-    if (mobIt == mobs.end()) {
+    auto mob_it = mobs.find(mobId);
+    if (mob_it == mobs.end()) {
       throw std::invalid_argument("Mob with given ID does not exist");
     }
-    
-    Mob* mobPtr = &mobIt->second;
-    
 
-    auto attackIt = currentlyUnderAttack.find(mobPtr);
-    if (attackIt != currentlyUnderAttack.end()) {
-      currentlyUnderAttack.erase(attackIt);
-      
+    Mob *mobPtr = &mob_it->second;
 
-      if (currentlyUnderAttack.empty() && mobs.size() > 1) {
-        for (auto& [id, mob] : mobs) {
+    auto attack_it = currently_under_attack.find(mobPtr);
+    if (attack_it != currently_under_attack.end()) {
+      currently_under_attack.erase(attack_it);
+
+      if (currently_under_attack.empty() && mobs.size() > 1) {
+        for (auto &[id, mob] : mobs) {
           if (id != mobId) {
-            currentlyUnderAttack.emplace(&mob);
+            currently_under_attack.emplace(&mob);
             break;
           }
         }
       }
     }
-    
 
-    mobs.erase(mobIt);
+    mobs.erase(mob_it);
   }
 
 };

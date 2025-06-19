@@ -11,7 +11,6 @@
 #include "../utils/Utils.h"
 #include "../utils/ErrorHandler.h"
 
-
 using ItemID = std::string;
 using json = nlohmann::json;
 
@@ -41,7 +40,7 @@ class Mob : public SmartSubscriber {
 
   void takeDamage(int amount) {
     currentHp = std::max(0, currentHp - amount);
-    if (!isAlive()){
+    if (!isAlive()) {
       getBus().add(mob::MobChangedMsg{.val = mob::State::DIED, .target = uniqueId});
     } else {
       getBus().add(mob::MobChangedMsg({.val = mob::State::HP_LESSENED, .target =uniqueId}));
@@ -71,6 +70,9 @@ class MobType {
   std::string beatingPattern;
   float attackDuration{};
   int attackPower{};
+  int coins{};
+  std::vector<std::string> items;
+  std::vector<std::string> books;
 
   std::unordered_map<ItemID, std::function<void(Mob &)>> itemReactions;
 
@@ -89,6 +91,17 @@ class MobType {
       beatingPattern = data.value("beating_pattern", "");
       attackDuration = data.value("attack_duration", 0.0F);
       attackPower = data.value("attack_power", 0);
+      coins = data.value("coins", 0);
+      if (data.contains("items") && data["items"].is_array()) {
+        for (const auto &item : data["items"]) {
+          items.push_back(item.get<std::string>());
+        }
+      }
+      if (data.contains("books") && data["books"].is_array()) {
+        for (const auto &book : data["books"]) {
+          books.push_back(book.get<std::string>());
+        }
+      }
       if (data.contains("item_reactions") && data["item_reactions"].is_array()) {
         for (const auto &reaction : data["item_reactions"]) {
           parseAndApply(reaction);
@@ -99,7 +112,7 @@ class MobType {
       throw std::runtime_error("Invalid MobType JSON format: " + std::string(e.what()));
     }
   }
-  void parseAndApply(const nlohmann::basic_json<>& reaction) {
+  void parseAndApply(const nlohmann::basic_json<> &reaction) {
     try {
       std::string event = reaction.value("event", "");
       std::string action = reaction.value("action", "");
@@ -137,9 +150,15 @@ class MobType {
 
   int getAttackPower() const { return attackPower; }
 
+  int getCoins() const { return coins; }
+
   bool hasReactionFor(const ItemID &item) const {
     return static_cast<unsigned int>(itemReactions.contains(item)) != 0U;
   }
+
+  const std::vector<std::string> &getItems() const { return items; }
+
+  const std::vector<std::string> &getBooks() const { return books; }
 };
 
 class MobDatabase {

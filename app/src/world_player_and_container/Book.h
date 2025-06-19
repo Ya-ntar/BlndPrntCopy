@@ -56,6 +56,10 @@ class Book {
     return durability.get_current_value();
   }
   bool hasInfiniteDurability() const { return infiniteDurability; }
+
+  [[nodiscard]] size_t getLevel() const { return lvl; }
+  [[nodiscard]] int32_t getDamagePerHit() const { return damage_per_hit; }
+  [[nodiscard]] int32_t getExtraTime() const { return extra_time; }
 };
 
 inline std::atomic<BookID> Book::globalIdCounter{0};

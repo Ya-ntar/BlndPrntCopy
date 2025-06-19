@@ -2,13 +2,17 @@
 #include "InFightManager.h"
 #include "../../InRunManager.h"
 #include "scenes/DefendScene.h"
+#include "../../InventoryMenu.h"
 
 std::unique_ptr<Scene> InFightManager::createScene(State::InFight scene) {
+  layout.load();
   switch (scene) {
-    case State::InFight::Atk: return std::make_unique<AtkScene>(this, runInfo, context);
-    case State::InFight::BattleMenu : return std::make_unique<BattleMenuScene>(this, menuBase);
-    case State::InFight::Inactive: return nullptr;
-    case State::InFight::Defend: return std::make_unique<DefendScene>(this, menuBase, runInfo, fightInfo);
+    using
+    enum State::InFight;
+    case Atk:return std::make_unique<AtkScene>(this, run_info_, context);
+    case BattleMenu :return std::make_unique<BattleMenuScene>(this, context);
+    case Inactive:return nullptr;
+    case Defend:return std::make_unique<DefendScene>(this, context, run_info_, info);
   }
   return nullptr;
 }
@@ -17,19 +21,18 @@ InFightManager::InFightManager(InRunManager *parent,
                                GameContext &context,
                                RunInfo &runInfo,  // хочу проглотить fightInfo
                                FightInfo &fightInfo,
-                               Layout &base) :
+                               Layout &layout) :
     SceneManager<State::InFight>(context),
-    runInfo(runInfo),
-    fightInfo(std::move(fightInfo)),
-    menuBase(base),
-    parent(parent) {
+    info(std::move(fightInfo)),
+    ItemReactionConfigurable(runInfo, info),
+    run_info_(runInfo),
+    layout(layout),
+    parent(parent),
+    mob_selectable_(std::make_shared<mob::MobSelectable>(info)) {
 
   subscribeToAll();
-  addReaction("InkBottle", [&](const Item &item) {
-    std::cout << "Reaction to InkBottle! Name: " << item.getName() << "\n";
-    runInfo.player.healHP(3);
-    std::cout << "Player was healed for three hp" << "\n";
-  }, "Лечит три здоровья.");
+  loadFMobReactionsFromConfig(kItemConfig);
+  // sub to items
 
 }
 
@@ -44,14 +47,15 @@ void InFightManager::showInventory() {
 void InFightManager::subscribeToAll() {
   subscribeSmartly<mob::MobChangedMsg>(
       [this](const mob::MobChangedMsg &msg) {
-       fightInfo.mobs;
+        if (msg.val == mob::State::DIED) {
+          info.removeMob(msg.target);
+          if (info.mobs.empty()) {
+            parent->winAFight(info);
+          }
+        }
+        mob_selectable_->load();
       }
   );
-  /*subscribeSmartly<mob::MobAttacking>(
-          [this](const mob::MobAttacking &msg) {
-              std::this_thread::sleep_for(std::chrono::milliseconds{800});
-          }
-  );*/
 }
 
 void InFightManager::startTurn() {
@@ -66,8 +70,8 @@ void InFightManager::startTurn() {
 }
 
 void InFightManager::damageMobs(fight::AtkEnded msg) {
-  for (auto *mob : fightInfo.currentlyUnderAttack) {
-    mob->takeDamage(msg.hits * runInfo.player.getPwr());
+  for (auto *mob : info.currently_under_attack) {
+    mob->takeDamage(msg.hits * run_info_.player.getPwr());
   }
 }
 

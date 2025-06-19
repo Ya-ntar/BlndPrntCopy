@@ -9,6 +9,7 @@
 class Loadable {
  public:
   virtual void load() = 0;
+  virtual void prepare() {};
   virtual ~Loadable() = default;
 };
 
@@ -25,6 +26,7 @@ class Settable : public Loadable {
     this->parent.reset();
     this->parent = std::move(newParent);
   }
+
   void connect() const { // единоличное владение?
     if (parent && mainField) {
       parent->removeAllWidgets();
@@ -54,7 +56,10 @@ class Scene : public SmartSubscriber, public Loadable {
   virtual void processDeferred() {};
 
   // output
-  void load() override { loadGraphics(); };
+  void load() override {
+    prepare();
+    loadGraphics();
+  };
 
   ~Scene() override = default;
 };
@@ -76,6 +81,7 @@ class SceneManager : public Scene {
 
   void deleteLastScene() {
     if (!activeScenes.empty()) {
+      activeScenes.back()->clear();
       activeScenes.pop_back();
     }
   }
@@ -138,10 +144,10 @@ class SceneManager : public Scene {
   };
 
   void loadGraphics() override {
-    for (auto const &layer : activeScenes) {
-      layer->loadGraphics();
-    }
+    prepare();
+    activeScenes.back()->loadGraphics();
   }
+
   std::vector<std::unique_ptr<Scene>> activeScenes;
 };
 

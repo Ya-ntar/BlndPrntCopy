@@ -32,7 +32,7 @@ class InRunPanel {
   }
 
  public:
-  explicit InRunPanel(RunInfo &runInfo, std::string path = std::string(Assets::FORM_BASE))
+  explicit InRunPanel(RunInfo &runInfo, std::string path = std::string(Assets::kFormBase))
       : runInfo(runInfo), path(std::move(path)) {}
 
   void setRunMenu(std::shared_ptr<tgui::Group> const &where) {
@@ -46,6 +46,7 @@ class InRunPanel {
     }
     mainPanel = tempGui.get<tgui::Panel>("main_panel");
     mainPanel->getRenderer()->setBorderColor(tgui::Color::White);
+    mainPanel->getRenderer()->setBackgroundColor(tgui::Color::Black);
 
     auto newMainFreeSpace = tempGui.get<tgui::Panel>("main_free_space");
     mainFreeSpace = newMainFreeSpace;

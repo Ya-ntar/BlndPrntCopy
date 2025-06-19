@@ -16,10 +16,10 @@ enum class InGame {
 };
 
 enum class InRun {
-  Inactive,
-  Scene,
-  Crossroad,
-  Inventory,
+  WON_BATTLE,
+  SCENE,
+  CROSSROAD,
+  INVENTORY,
 };
 enum class InFight {
   Inactive,

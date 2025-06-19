@@ -23,7 +23,7 @@ class MenuScene : public Scene {
 
  public:
   explicit MenuScene(MainManager *parent, GameContext &context,
-                     std::string  path = std::string(Assets::FORM_MENU)) :
+                     std::string path = std::string(Assets::kFormMenu)) :
       Scene(context),
       parent(parent),
       path(std::move(path)),
@@ -31,7 +31,7 @@ class MenuScene : public Scene {
 
   void clear() override {
     // usually doesn't need anything special
-    };
+  };
   void loadGraphics() override;
   void load() override;
 

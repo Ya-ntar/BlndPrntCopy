@@ -5,20 +5,19 @@
 #include "../../../GameContext.h"
 #include "InRunManager.h"
 
-
 class BookMenu : public Scene {
   RunInfo &runInfo;
-  std::string path = Assets::FORM_INVENTORY;
+  std::string path = Assets::kFormInventory;
   InRunManager &parent;
-  std::shared_ptr<tgui::Panel> mainPanel;
-  std::shared_ptr<tgui::ScrollablePanel> bookPanel;
-  std::shared_ptr<tgui::Button> backButton;
+  std::shared_ptr<tgui::Panel> main_panel_;
+  std::shared_ptr<tgui::ScrollablePanel> panel_;
+  std::shared_ptr<tgui::Button> back_button_;
 
   void reloadBooks() {
-    auto vLayout = bookPanel->get<tgui::GrowVerticalLayout>("vLayout");
+    auto vLayout = panel_->get<tgui::GrowVerticalLayout>("vLayout");
     if (!vLayout) {
       vLayout = tgui::GrowVerticalLayout::create();
-      bookPanel->add(vLayout, "vLayout");
+      panel_->add(vLayout, "vLayout");
     }
     vLayout->removeAllWidgets();
 
@@ -28,25 +27,26 @@ class BookMenu : public Scene {
 
       std::string btnName = book.getName();
       auto button = tgui::Button::create(btnName);
-      button->setSize("150", "30");
-      button->getRenderer()->setBorderColor(tgui::Color::White);
-      button->getRenderer()->setBackgroundColor(tgui::Color::Black);
-      button->getRenderer()->setTextColor(tgui::Color::White);
+      button->setSize("150", "35");
+      WidgetConfigurator::configureButton(button);
       button->onPress([this, id = book.getId()] {
         runInfo.setCurrentBook(id);
+        parent.loadGraphics();
       });
 
       auto description = tgui::RichTextLabel::create();
-      description->setText(book.getName() + ", " + std::to_string(book.getDurability()));
-      description->getRenderer()->setTextColor(tgui::Color::White);
-      description->getRenderer()->setBorderColor(tgui::Color::White);
-      description->getRenderer()->setTextStyle(tgui::TextStyle::Italic);
-      description->setVerticalAlignment(tgui::VerticalAlignment::Center);
-      description->setHorizontalAlignment(tgui::HorizontalAlignment::Center);
+      description->setText(book.getName() +
+          " (Lvl: " + std::to_string(book.getLevel()) +
+          ", DMG: " + std::to_string(book.getDamagePerHit()) +
+          ", Time: +" + std::to_string(book.getExtraTime()) +
+          ", Durability: " + std::to_string(book.getDurability()) + ")");
+      WidgetConfigurator::configureRichTextLabel(description, tgui::Color::Black, tgui::Color::White,
+                                                 tgui::Color::White, tgui::VerticalAlignment::Center,
+                                                 tgui::HorizontalAlignment::Center, 0, tgui::TextStyle::Regular);
 
       auto line = tgui::SeparatorLine::create(button->getSizeLayout());
-
-      hLayout->setSize(button->getSizeLayout().x + description->getSizeLayout().x, button->getSizeLayout().y);
+      description->setSize("300", "35");
+      hLayout->setSize(button->getSize().x + description->getSize().x, button->getSizeLayout().y);
       hLayout->add(button);
       hLayout->add(line);
       hLayout->add(description);
@@ -57,32 +57,26 @@ class BookMenu : public Scene {
 
  public:
   void loadGraphics() override {
-    //context.gui.removeAllWidgets();
-    //BookLayoutUtils::createBase(context.gui);
-    //BookLayoutUtils::addRunInfo(context.gui, runInfo);
 
-    // Create main panel
-    mainPanel = tgui::Panel::create();
-    mainPanel->setSize("100%", "100%");
-    mainPanel->getRenderer()->setBackgroundColor(tgui::Color::Black);
+    main_panel_ = tgui::Panel::create();
+    WidgetConfigurator::configurePanel(main_panel_);
 
     auto middle = context.gui.get<tgui::Panel>("main_free_space");
-    middle->add(mainPanel);
+    middle->add(main_panel_);
 
-    // Create book panel
-    bookPanel = tgui::ScrollablePanel::create();
-    bookPanel->setSize("80%", "80%");
-    bookPanel->setPosition("10%", "10%");
-    bookPanel->getRenderer()->setBackgroundColor(tgui::Color(30, 30, 30));
-    mainPanel->add(bookPanel);
+    panel_ = tgui::ScrollablePanel::create();
+    WidgetConfigurator::configureScrollablePanel(panel_);
+    main_panel_->add(panel_);
 
-    // Create back button
-    backButton = context.gui.get<tgui::Button>("back");
-    backButton->onPress.disconnectAll();
-    backButton->setText("back");
-    backButton->onPress([this] {
+    back_button_ = context.gui.get<tgui::Button>("back");
+    WidgetConfigurator::configureBackButton(back_button_);
+    back_button_->onPress([this] {
       parent.hideBookMenu();
     });
+
+    if (auto info = context.gui.get<tgui::TextArea>("menu_info")) {
+      info->setText("Book Menu");
+    }
 
     reloadBooks();
   }
@@ -93,11 +87,11 @@ class BookMenu : public Scene {
       : Scene(context), runInfo(runInfo), parent(parent) {};
 
   void clear() override {
-    if (mainPanel) {
-      context.gui.remove(mainPanel);
-      mainPanel.reset();
-      bookPanel.reset();
-      backButton.reset();
+    if (main_panel_) {
+      context.gui.remove(main_panel_);
+      main_panel_.reset();
+      panel_.reset();
+      back_button_.reset();
     }
   }
 }; 

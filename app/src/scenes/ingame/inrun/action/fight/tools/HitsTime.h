@@ -28,9 +28,9 @@ class HitsTime : SmartSubscriber {
  public:
   HitsTime(std::string timerName, std::shared_ptr<tgui::RichTextLabel> hitArea,
            std::shared_ptr<tgui::RichTextLabel> timeArea, QueuedMessageBus &bus) : SmartSubscriber(bus),
-                                                                              timerName(std::move(timerName)),
-                                                                              hitArea(std::move(hitArea)),
-                                                                              timeArea(std::move(timeArea)) {
+                                                                                   timerName(std::move(timerName)),
+                                                                                   hitArea(std::move(hitArea)),
+                                                                                   timeArea(std::move(timeArea)) {
     sub();
 
   }

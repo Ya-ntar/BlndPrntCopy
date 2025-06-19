@@ -1,5 +1,6 @@
 #include "AtkScene.h"
 #include "../InFightManager.h"
+#include "../../../../../../utils/WidgetConfigurator.h"
 
 void AtkScene::load() {
 
@@ -29,10 +30,16 @@ void AtkScene::subscribeToAll() {
 }
 
 void AtkScene::loadGraphics() {
+  menu.clearVisual();
+  menu.createWidgets();
+  menu.load();
+  if (auto info = context.gui.get<tgui::TextArea>("menu_info")) {
+    info->setText("Attack");
+  }
+
   auto const &gui = menu.getGui();
   if (auto backButton = gui.get<tgui::Button>("back")) {
-    backButton->onPress.disconnectAll();
-    backButton->setText("End Attack");
+    WidgetConfigurator::configureBackButton(backButton, "End Attack");
     backButton->onPress([this] {
       parent->changeScene(State::InFight::BattleMenu);
     });

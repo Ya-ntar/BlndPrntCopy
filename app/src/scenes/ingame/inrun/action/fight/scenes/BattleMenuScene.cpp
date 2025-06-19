@@ -4,20 +4,18 @@
 #include "BattleMenuScene.h"
 #include "../InFightManager.h"
 #include "../../../base/InventoryButtonUtil.h"
+#include "../../../../../../utils/WidgetConfigurator.h"
 
 void BattleMenuScene::loadGraphics() {
-  menuBase.load();
-  if (auto backButton = menuBase.getGui().get<tgui::Button>("back")) {
+  if (auto backButton = context.gui.get<tgui::Button>("back")) {
     backButton->setText("Run away");
     backButton->onPress([this] {
       parent->runAway();
     });
   }
-
-  if (auto info = menuBase.getGui().get<tgui::TextArea>("menu_info")){
+  if (auto info = context.gui.get<tgui::TextArea>("menu_info")) {
     info->setText("Battle Menu");
   }
-
   auto layout = tgui::HorizontalLayout::create();
   layout->setWidgetName("layout");
   auto act = InventoryButtonUtil::createStyledButton(parent->getCurrentTurn());
@@ -26,8 +24,13 @@ void BattleMenuScene::loadGraphics() {
   });
   layout->add(act);
   InventoryButtonUtil::addInventoryButton(layout, parent);
-  menuBase.getMainFreeSpace()->add(layout);
-  layout->setPosition({"1%", "0%"});
-  layout->setSize({"50%", "50%"});
+  auto main = context.gui.get<tgui::Panel>("main_free_space");
+  main->add(layout);
+  WidgetConfigurator::configureMenuLayout(layout);
+}
+
+void BattleMenuScene::clear() {
+  auto main = context.gui.get<tgui::Panel>("main_free_space");
+  main->removeAllWidgets();
 }
 

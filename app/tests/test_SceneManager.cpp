@@ -134,10 +134,10 @@ TEST_CASE("InRunManager add, delete, and change scenes", "[InRunManager]") {
 
     REQUIRE(manager.activeScenes.empty());
 
-    manager.addScene(State::InRun::Crossroad);
+    manager.addScene(State::InRun::CROSSROAD);
     REQUIRE(manager.activeScenes.size() == 1);
 
-    manager.addScene(State::InRun::Inventory);
+    manager.addScene(State::InRun::INVENTORY);
     REQUIRE(manager.activeScenes.size() == 2);
 
 
@@ -146,7 +146,7 @@ TEST_CASE("InRunManager add, delete, and change scenes", "[InRunManager]") {
     REQUIRE(manager.activeScenes.size() == 1);
 
     // Меняем сцену на Scene
-    manager.changeScene(State::InRun::Scene);
+    manager.changeScene(State::InRun::SCENE);
     manager.processDeferred();
     REQUIRE(manager.activeScenes.size() == 1);
 
